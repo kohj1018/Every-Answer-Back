@@ -1,16 +1,15 @@
-package com.fineapple.everyanswerback.web.dto;
+package com.fineapple.everyanswerback.web.users.dto;
 
+import com.fineapple.everyanswerback.domain.deptClass.DeptClass;
 import com.fineapple.everyanswerback.domain.users.Users;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Getter
 @NoArgsConstructor
 public class UsersSaveRequestDto {
+    private DeptClass deptClass;
     private String nickname;
     private String deptName;
     private String univ;
@@ -20,7 +19,8 @@ public class UsersSaveRequestDto {
     private Boolean isDelete;
 
     @Builder
-    public UsersSaveRequestDto(String nickname, String deptName, String univ, int entranceYear, String oauthId, String refreshToken, Boolean isDelete) {
+    public UsersSaveRequestDto(DeptClass deptClass, String nickname, String deptName, String univ, int entranceYear, String oauthId, String refreshToken, Boolean isDelete) {
+        this.deptClass = deptClass;
         this.nickname = nickname;
         this.deptName = deptName;
         this.univ = univ;
@@ -32,6 +32,7 @@ public class UsersSaveRequestDto {
 
     public Users toEntity() {
         return Users.builder()
+                .deptClass(deptClass)
                 .nickname(nickname)
                 .deptName(deptName)
                 .univ(univ)

@@ -1,7 +1,8 @@
 package com.fineapple.everyanswerback.domain.users;
 
 import com.fineapple.everyanswerback.domain.BaseTimeEntity;
-import lombok.AccessLevel;
+import com.fineapple.everyanswerback.domain.deptClass.DeptClass;
+import com.fineapple.everyanswerback.web.users.dto.UsersUpdateRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,12 @@ public class Users extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "user_id")
+    private Long userId;
+
+    @ManyToOne
+    @JoinColumn(name = "dept_id")
+    private DeptClass deptClass;
 
     @Column(length = 20, nullable = false)
     private String nickname;
@@ -38,9 +44,9 @@ public class Users extends BaseTimeEntity {
     @Column(name = "is_delete", nullable = false)
     private Boolean isDelete;
 
-
     @Builder
-    public Users(String nickname, String deptName, String univ, int entranceYear, String oauthId, String refreshToken, boolean isDelete) {
+    public Users(DeptClass deptClass, String nickname, String deptName, String univ, int entranceYear, String oauthId, String refreshToken, Boolean isDelete) {
+        this.deptClass = deptClass;
         this.nickname = nickname;
         this.deptName = deptName;
         this.univ = univ;
@@ -48,5 +54,16 @@ public class Users extends BaseTimeEntity {
         this.oauthId = oauthId;
         this.refreshToken = refreshToken;
         this.isDelete = isDelete;
+    }
+
+    public void update(UsersUpdateRequestDto requestDto) {
+        this.deptClass = requestDto.getDeptClass();
+        this.nickname = requestDto.getNickname();
+        this.deptName = requestDto.getDeptName();
+        this.univ = requestDto.getUniv();
+        this.entranceYear = requestDto.getEntranceYear();
+        this.oauthId = requestDto.getOauthId();
+        this.refreshToken = requestDto.getRefreshToken();
+        this.isDelete = requestDto.getIsDelete();
     }
 }
