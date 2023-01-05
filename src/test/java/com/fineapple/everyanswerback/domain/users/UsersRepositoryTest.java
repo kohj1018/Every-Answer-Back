@@ -33,7 +33,7 @@ class UsersRepositoryTest {
         int entranceYear = 20;
         String oauthId = "testOauth";
         String refreshToken = "testRefreshToken";
-        boolean isActive = true;
+        boolean isDelete = true;
 
         LocalDateTime time = LocalDateTime.of(2019, 11, 25, 0, 0, 0);
 
@@ -44,7 +44,7 @@ class UsersRepositoryTest {
                 .entranceYear(entranceYear)
                 .oauthId(oauthId)
                 .refreshToken(refreshToken)
-                .isActive(isActive)
+                .isDelete(isDelete)
                 .build());
 
         //when
@@ -58,7 +58,8 @@ class UsersRepositoryTest {
         assertThat(users.getEntranceYear()).isEqualTo(entranceYear);
         assertThat(users.getOauthId()).isEqualTo(oauthId);
         assertThat(users.getRefreshToken()).isEqualTo(refreshToken);
-        assertThat(users.isActive()).isEqualTo(isActive);
+        assertThat(users.getIsDelete()).isEqualTo(isDelete);
+        System.out.println(users.getIsDelete());
         assertThat(users.getCreatedAt()).isAfter(time);
         assertThat(users.getUpdatedAt()).isAfter(time);
         System.out.println(users.getCreatedAt());

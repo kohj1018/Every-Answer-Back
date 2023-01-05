@@ -1,12 +1,12 @@
 package com.fineapple.everyanswerback.domain.users;
 
 import com.fineapple.everyanswerback.domain.BaseTimeEntity;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
@@ -35,17 +35,18 @@ public class Users extends BaseTimeEntity {
     @Column(name = "refresh_token", nullable = false)
     private String refreshToken;
 
-    @Column(name = "is_active", nullable = false)
-    private boolean isActive;
+    @Column(name = "is_delete", nullable = false)
+    private Boolean isDelete;
+
 
     @Builder
-    public Users(String nickname, String deptName, String univ, int entranceYear, String oauthId, String refreshToken, boolean isActive) {
+    public Users(String nickname, String deptName, String univ, int entranceYear, String oauthId, String refreshToken, boolean isDelete) {
         this.nickname = nickname;
         this.deptName = deptName;
         this.univ = univ;
         this.entranceYear = entranceYear;
         this.oauthId = oauthId;
         this.refreshToken = refreshToken;
-        this.isActive = isActive;
+        this.isDelete = isDelete;
     }
 }

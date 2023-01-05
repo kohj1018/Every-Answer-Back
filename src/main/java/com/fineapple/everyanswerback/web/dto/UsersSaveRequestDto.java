@@ -1,6 +1,7 @@
 package com.fineapple.everyanswerback.web.dto;
 
 import com.fineapple.everyanswerback.domain.users.Users;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,17 +17,17 @@ public class UsersSaveRequestDto {
     private int entranceYear;
     private String oauthId;
     private String refreshToken;
-    private boolean isActive;
+    private Boolean isDelete;
 
     @Builder
-    public UsersSaveRequestDto(String nickname, String deptName, String univ, int entranceYear, String oauthId, String refreshToken, boolean isActive) {
+    public UsersSaveRequestDto(String nickname, String deptName, String univ, int entranceYear, String oauthId, String refreshToken, Boolean isDelete) {
         this.nickname = nickname;
         this.deptName = deptName;
         this.univ = univ;
         this.entranceYear = entranceYear;
         this.oauthId = oauthId;
         this.refreshToken = refreshToken;
-        this.isActive = isActive;
+        this.isDelete = isDelete;
     }
 
     public Users toEntity() {
@@ -37,7 +38,7 @@ public class UsersSaveRequestDto {
                 .entranceYear(entranceYear)
                 .oauthId(oauthId)
                 .refreshToken(refreshToken)
-                .isActive(isActive)
+                .isDelete(isDelete)
                 .build();
     }
 }

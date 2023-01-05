@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -28,7 +27,7 @@ public class UsersApiControllerTest {
     private int port;
 
     @Autowired
-    private TestRestTemplate restTemplate;
+    private TestRestTemplate testRestTemplate;
 
     @Autowired
     private UsersRepository usersRepository;
@@ -39,7 +38,9 @@ public class UsersApiControllerTest {
     }
 
     @Test
-    public void 유저_등록된다() throws Exception {
+    public void Users_등록된다() throws Exception {
+        LocalDateTime time = LocalDateTime.of(2019, 11, 25, 0, 0, 0);
+
         //given
         String nickname = "test1";
         String deptName = "컴공";
@@ -47,9 +48,8 @@ public class UsersApiControllerTest {
         int entranceYear = 20;
         String oauthId = "testOauth";
         String refreshToken = "testRefreshToken";
-        boolean isActive = true;
+        Boolean isDelete = true;
 
-        LocalDateTime time = LocalDateTime.of(2019, 11, 25, 0, 0, 0);
 
         UsersSaveRequestDto requestDto = UsersSaveRequestDto.builder()
                 .nickname(nickname)
@@ -58,33 +58,28 @@ public class UsersApiControllerTest {
                 .entranceYear(entranceYear)
                 .oauthId(oauthId)
                 .refreshToken(refreshToken)
-                .isActive(isActive)
+                .isDelete(isDelete)
                 .build();
 
         String url = "http://localhost:" + port + "/api/v1/users";
 
-        //when 1
-        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class);
+        //when
+        ResponseEntity<Long> responseEntity = testRestTemplate.postForEntity(url, requestDto, Long.class);
 
-        //then 2
+        //then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isGreaterThan(0L);
 
-        //when 1
-        List<Users> usersList = usersRepository.findAll();
-        Users users = usersList.get(0);
-        System.out.println(users);
-
-        //when 2
-        assertThat(users.getNickname()).isEqualTo(nickname);
-        assertThat(users.getDeptName()).isEqualTo(deptName);
-        assertThat(users.getUniv()).isEqualTo(univ);
-        assertThat(users.getEntranceYear()).isEqualTo(entranceYear);
-        assertThat(users.getOauthId()).isEqualTo(oauthId);
-        assertThat(users.getRefreshToken()).isEqualTo(refreshToken);
-//        assertThat(users.isActive()).isEqualTo(isActive); TODO: 요거 거꾸로 나오는데 해결 필요
-        assertThat(users.getCreatedAt()).isAfter(time);
-        assertThat(users.getUpdatedAt()).isAfter(time);
-        System.out.println(users.getCreatedAt());
+        List<Users> all = usersRepository.findAll();
+        assertThat(all.get(0).getNickname()).isEqualTo(nickname);
+        assertThat(all.get(0).getDeptName()).isEqualTo(deptName);
+        assertThat(all.get(0).getUniv()).isEqualTo(univ);
+        assertThat(all.get(0).getEntranceYear()).isEqualTo(entranceYear);
+        assertThat(all.get(0).getOauthId()).isEqualTo(oauthId);
+        assertThat(all.get(0).getRefreshToken()).isEqualTo(refreshToken);
+        assertThat(all.get(0).getIsDelete()).isEqualTo(isDelete);
+        assertThat(all.get(0).getCreatedAt()).isAfter(time);
+        assertThat(all.get(0).getUpdatedAt()).isAfter(time);
+        System.out.println(all.get(0).getCreatedAt());
     }
 }
