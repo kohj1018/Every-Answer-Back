@@ -2,12 +2,15 @@ package com.fineapple.everyanswerback.domain.users;
 
 import com.fineapple.everyanswerback.domain.BaseTimeEntity;
 import com.fineapple.everyanswerback.domain.deptClass.DeptClass;
+import com.fineapple.everyanswerback.domain.questionPosts.QuestionPosts;
 import com.fineapple.everyanswerback.web.users.dto.UsersUpdateRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -43,6 +46,9 @@ public class Users extends BaseTimeEntity {
 
     @Column(name = "is_delete", nullable = false)
     private Boolean isDelete;
+
+    @OneToMany(mappedBy = "users")  // QuestionPosts 와의 양방향 매핑을 위해 추가
+    private List<QuestionPosts> questionPostsList = new ArrayList<>();
 
     @Builder
     public Users(DeptClass deptClass, String nickname, String deptName, String univ, int entranceYear, String oauthId, String refreshToken, Boolean isDelete) {

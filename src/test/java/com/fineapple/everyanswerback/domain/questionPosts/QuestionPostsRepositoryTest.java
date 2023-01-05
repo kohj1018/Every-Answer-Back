@@ -1,7 +1,9 @@
-package com.fineapple.everyanswerback.domain.users;
+package com.fineapple.everyanswerback.domain.questionPosts;
 
 import com.fineapple.everyanswerback.domain.deptClass.DeptClass;
 import com.fineapple.everyanswerback.domain.deptClass.DeptClassRepository;
+import com.fineapple.everyanswerback.domain.users.Users;
+import com.fineapple.everyanswerback.domain.users.UsersRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +18,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-class UsersRepositoryTest {
+class QuestionPostsRepositoryTest {
+
+    @Autowired
+    QuestionPostsRepository questionPostsRepository;
 
     @Autowired
     DeptClassRepository deptClassRepository;
@@ -26,12 +31,13 @@ class UsersRepositoryTest {
 
     @AfterEach
     public void cleanup() {
+        questionPostsRepository.deleteAll();
         usersRepository.deleteAll();
         deptClassRepository.deleteAll();
     }
 
     @Test
-    public void 신규유저_저장_및_불러오기() {
+    public void 질문글_저장_및_불러오기() {
         //given
         // DeptClass 저장
         DeptClass deptClass = DeptClass.builder()
@@ -51,7 +57,7 @@ class UsersRepositoryTest {
         String refreshToken = "testRefreshToken";
         boolean isDelete = true;
 
-        usersRepository.save(Users.builder()
+        Users users = Users.builder()
                 .deptClass(deptClass)
                 .nickname(nickname)
                 .deptName(deptName)
@@ -60,27 +66,34 @@ class UsersRepositoryTest {
                 .oauthId(oauthId)
                 .refreshToken(refreshToken)
                 .isDelete(isDelete)
+                .build();
+
+        usersRepository.save(users);
+
+        // QuestionPosts 저장
+        String title = "test 제목";
+        String content = "test 내용";
+
+        questionPostsRepository.save(QuestionPosts.builder()
+                .users(users)
+                .deptClass(deptClass)
+                .title(title)
+                .content(content)
                 .build());
 
         // 비교를 위한 기준 시간 변수 초기화
         LocalDateTime time = LocalDateTime.of(2019, 11, 25, 0, 0, 0);
 
         //when
-        List<Users> usersList = usersRepository.findAll();
+        List<QuestionPosts> questionPostsList = questionPostsRepository.findAll();
 
         //then
-        Users users = usersList.get(0);
-        assertThat(users.getDeptClass().getDeptId()).isEqualTo(deptClass.getDeptId());
-        assertThat(users.getNickname()).isEqualTo(nickname);
-        assertThat(users.getDeptName()).isEqualTo(deptName);
-        assertThat(users.getUniv()).isEqualTo(univ);
-        assertThat(users.getEntranceYear()).isEqualTo(entranceYear);
-        assertThat(users.getOauthId()).isEqualTo(oauthId);
-        assertThat(users.getRefreshToken()).isEqualTo(refreshToken);
-        assertThat(users.getIsDelete()).isEqualTo(isDelete);
-        System.out.println(users.getIsDelete());
-        assertThat(users.getCreatedAt()).isAfter(time);
-        assertThat(users.getUpdatedAt()).isAfter(time);
-        System.out.println(users.getCreatedAt());
+        QuestionPosts questionPost = questionPostsList.get(0);
+        assertThat(questionPost.getUsers().getUserId()).isEqualTo(users.getUserId());
+        assertThat(questionPost.getDeptClass().getDeptId()).isEqualTo(deptClass.getDeptId());
+        assertThat(questionPost.getTitle()).isEqualTo(title);
+        assertThat(questionPost.getContent()).isEqualTo(content);
+        assertThat(questionPost.getCreatedAt()).isAfter(time);
     }
+
 }

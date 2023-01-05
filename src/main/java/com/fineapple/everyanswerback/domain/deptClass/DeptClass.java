@@ -1,5 +1,6 @@
 package com.fineapple.everyanswerback.domain.deptClass;
 
+import com.fineapple.everyanswerback.domain.questionPosts.QuestionPosts;
 import com.fineapple.everyanswerback.domain.users.Users;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,8 +28,11 @@ public class DeptClass {
     @Column(length = 30, nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "deptClass")  // Users 테이블과의 양방향 매핑을 위해 추가
+    @OneToMany(mappedBy = "deptClass")  // Users 와의 양방향 매핑을 위해 추가
     private List<Users> usersList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "deptClass")  // QuestionPosts 와의 양방향 매핑을 위해 추가
+    private List<QuestionPosts> questionPostsList = new ArrayList<>();
 
     @Builder
     public DeptClass(Long deptId, String college, String name) {
