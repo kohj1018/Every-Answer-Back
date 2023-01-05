@@ -82,7 +82,7 @@ class QuestionPostsApiControllerTest {
         String content = "test 내용";
 
         QuestionPostsSaveRequestDto requestDto = QuestionPostsSaveRequestDto.builder()
-                .users(user)
+                .user(user)
                 .deptClass(deptClass)
                 .title(title)
                 .content(content)
@@ -101,7 +101,7 @@ class QuestionPostsApiControllerTest {
         assertThat(responseEntity.getBody()).isGreaterThan(0L);
 
         List<QuestionPosts> all = questionPostsRepository.findAll();
-        assertThat(all.get(0).getUsers().getNickname()).isEqualTo(nickname);
+        assertThat(all.get(0).getUser().getNickname()).isEqualTo(nickname);
         assertThat(all.get(0).getDeptClass().getDeptId()).isEqualTo(deptId);
         assertThat(all.get(0).getTitle()).isEqualTo(title);
         assertThat(all.get(0).getContent()).isEqualTo(content);

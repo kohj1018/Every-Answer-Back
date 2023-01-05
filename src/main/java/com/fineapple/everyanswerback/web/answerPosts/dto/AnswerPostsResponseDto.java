@@ -1,9 +1,9 @@
-package com.fineapple.everyanswerback.web.questionPosts.dto;
+package com.fineapple.everyanswerback.web.answerPosts.dto;
 
-import com.fineapple.everyanswerback.domain.deptClass.DeptClass;
+import com.fineapple.everyanswerback.domain.answerPosts.AnswerPosts;
 import com.fineapple.everyanswerback.domain.questionPosts.QuestionPosts;
 import com.fineapple.everyanswerback.domain.users.Users;
-import com.fineapple.everyanswerback.web.deptClass.dto.DeptClassResponseDto;
+import com.fineapple.everyanswerback.web.questionPosts.dto.QuestionPostsResponseDto;
 import com.fineapple.everyanswerback.web.users.dto.UsersResponseDto;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,20 +13,21 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
-public class QuestionPostsResponseDto {
-    private Long questionPostId;
+public class AnswerPostsResponseDto {
+    private Long answerPostId;
+    private QuestionPostsResponseDto questionPost;
     private UsersResponseDto user;
-    private DeptClassResponseDto deptClass;
-    private String title;
+    private Long likeNum;
     private String content;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public QuestionPostsResponseDto(QuestionPosts entity) {
-        this.questionPostId = entity.getQuestionPostId();
+    @Builder
+    public AnswerPostsResponseDto(AnswerPosts entity) {
+        this.answerPostId = entity.getAnswerPostId();
+        this.questionPost = new QuestionPostsResponseDto(entity.getQuestionPost());
         this.user = new UsersResponseDto(entity.getUser());
-        this.deptClass = new DeptClassResponseDto(entity.getDeptClass());
-        this.title = entity.getTitle();
+        this.likeNum = entity.getLikeNum();
         this.content = entity.getContent();
         this.createdAt = entity.getCreatedAt();
         this.updatedAt = entity.getUpdatedAt();

@@ -57,7 +57,7 @@ class QuestionPostsRepositoryTest {
         String refreshToken = "testRefreshToken";
         boolean isDelete = true;
 
-        Users users = Users.builder()
+        Users user = Users.builder()
                 .deptClass(deptClass)
                 .nickname(nickname)
                 .deptName(deptName)
@@ -68,14 +68,14 @@ class QuestionPostsRepositoryTest {
                 .isDelete(isDelete)
                 .build();
 
-        usersRepository.save(users);
+        usersRepository.save(user);
 
         // QuestionPosts 저장
         String title = "test 제목";
         String content = "test 내용";
 
         questionPostsRepository.save(QuestionPosts.builder()
-                .users(users)
+                .user(user)
                 .deptClass(deptClass)
                 .title(title)
                 .content(content)
@@ -89,7 +89,7 @@ class QuestionPostsRepositoryTest {
 
         //then
         QuestionPosts questionPost = questionPostsList.get(0);
-        assertThat(questionPost.getUsers().getUserId()).isEqualTo(users.getUserId());
+        assertThat(questionPost.getUser().getUserId()).isEqualTo(user.getUserId());
         assertThat(questionPost.getDeptClass().getDeptId()).isEqualTo(deptClass.getDeptId());
         assertThat(questionPost.getTitle()).isEqualTo(title);
         assertThat(questionPost.getContent()).isEqualTo(content);

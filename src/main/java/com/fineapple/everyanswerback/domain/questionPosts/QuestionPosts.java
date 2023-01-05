@@ -1,6 +1,7 @@
 package com.fineapple.everyanswerback.domain.questionPosts;
 
 import com.fineapple.everyanswerback.domain.BaseTimeEntity;
+import com.fineapple.everyanswerback.domain.answerPosts.AnswerPosts;
 import com.fineapple.everyanswerback.domain.deptClass.DeptClass;
 import com.fineapple.everyanswerback.domain.users.Users;
 import com.fineapple.everyanswerback.web.questionPosts.dto.QuestionPostsUpdateRequestDto;
@@ -9,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -21,11 +24,11 @@ public class QuestionPosts extends BaseTimeEntity {
     private Long questionPostId;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private Users users;
+    @JoinColumn(name = "user_id", nullable = false)
+    private Users user;
 
     @ManyToOne
-    @JoinColumn(name = "dept_id")
+    @JoinColumn(name = "dept_id", nullable = false)
     private DeptClass deptClass;
 
     @Column(length = 100, nullable = false)
@@ -34,9 +37,12 @@ public class QuestionPosts extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    @OneToMany(mappedBy = "questionPost")   // AnswerPosts 와의 양방향 매핑을 위해 추가
+    private List<AnswerPosts> answerPostsList = new ArrayList<>();
+
     @Builder
-    public QuestionPosts(Users users, DeptClass deptClass, String title, String content) {
-        this.users = users;
+    public QuestionPosts(Users user, DeptClass deptClass, String title, String content) {
+        this.user = user;
         this.deptClass = deptClass;
         this.title = title;
         this.content = content;
