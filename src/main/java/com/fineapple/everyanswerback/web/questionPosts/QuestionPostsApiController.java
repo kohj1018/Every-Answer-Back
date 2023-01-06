@@ -4,26 +4,33 @@ import com.fineapple.everyanswerback.service.QuestionPostsService;
 import com.fineapple.everyanswerback.web.questionPosts.dto.QuestionPostsResponseDto;
 import com.fineapple.everyanswerback.web.questionPosts.dto.QuestionPostsSaveRequestDto;
 import com.fineapple.everyanswerback.web.questionPosts.dto.QuestionPostsUpdateRequestDto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "QuestionPosts", description = "질문글 관련 api 입니다.")
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/api/v1/questionPosts")
 public class QuestionPostsApiController {
 
     private final QuestionPostsService questionPostsService;
 
-    @PostMapping("/api/v1/questionPosts")
+    @Operation(summary = "질문글 저장하기")
+    @PostMapping()
     public Long save(@RequestBody QuestionPostsSaveRequestDto requestDto) {
         return questionPostsService.save(requestDto);
     }
 
-    @PutMapping("/api/v1/questionPosts/{id}")
+    @Operation(summary = "질문글 수정하기")
+    @PutMapping("/{id}")
     public Long update(@PathVariable Long id, @RequestBody QuestionPostsUpdateRequestDto requestDto) {
         return questionPostsService.update(id, requestDto);
     }
 
-    @GetMapping("/api/v1/questionPosts/{id}")
+    @Operation(summary = "ID로 질문글 불러오기")
+    @GetMapping("/{id}")
     public QuestionPostsResponseDto findById(@PathVariable Long id) {
         return questionPostsService.findById(id);
     }
