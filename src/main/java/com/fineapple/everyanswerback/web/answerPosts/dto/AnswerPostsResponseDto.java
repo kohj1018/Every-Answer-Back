@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class AnswerPostsResponseDto {
     private Long answerPostId;
-    private QuestionPostsResponseDto questionPost;
+    private Long questionPostId;
     private UsersResponseDto user;
     private Long likeNum;
     private String content;
@@ -21,7 +21,7 @@ public class AnswerPostsResponseDto {
 
     public AnswerPostsResponseDto(AnswerPosts entity) {
         this.answerPostId = entity.getAnswerPostId();
-        this.questionPost = new QuestionPostsResponseDto(entity.getQuestionPost());
+        this.questionPostId = entity.getQuestionPost().getQuestionPostId();
         this.user = new UsersResponseDto(entity.getUser());
         this.likeNum = entity.getLikeNum();
 
