@@ -174,7 +174,6 @@ class AnswerPostsApiControllerTest {
         AnswerPosts answerPost = answerPostsRepository.save(AnswerPosts.builder()
                 .questionPost(questionPost)
                 .user(user)
-                .likeNum(0L)
                 .content(content)
                 .build());
 
@@ -213,7 +212,6 @@ class AnswerPostsApiControllerTest {
         answerPostsRepository.save(AnswerPosts.builder()
                 .questionPost(questionPost)
                 .user(user)
-                .likeNum(0L)
                 .content(content)
                 .build());
 
@@ -221,7 +219,6 @@ class AnswerPostsApiControllerTest {
         answerPostsRepository.save(AnswerPosts.builder()
                 .questionPost(questionPost2)
                 .user(user2)
-                .likeNum(0L)
                 .content(content2)
                 .build());
 
@@ -229,7 +226,6 @@ class AnswerPostsApiControllerTest {
         answerPostsRepository.save(AnswerPosts.builder()
                 .questionPost(questionPost2)
                 .user(user)
-                .likeNum(0L)
                 .content(content3)
                 .build());
 

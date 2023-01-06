@@ -27,7 +27,6 @@ public class AnswerPostsSaveRequestDto {
         return AnswerPosts.builder()
                 .questionPost(questionPost)
                 .user(user)
-                .likeNum(likeNum)
                 .content(content)
                 .build();
     }

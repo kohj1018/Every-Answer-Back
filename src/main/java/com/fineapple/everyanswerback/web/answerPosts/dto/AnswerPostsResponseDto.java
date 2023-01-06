@@ -1,7 +1,6 @@
 package com.fineapple.everyanswerback.web.answerPosts.dto;
 
 import com.fineapple.everyanswerback.domain.answerPosts.AnswerPosts;
-import com.fineapple.everyanswerback.web.questionPosts.dto.QuestionPostsResponseDto;
 import com.fineapple.everyanswerback.web.users.dto.UsersResponseDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,8 +22,7 @@ public class AnswerPostsResponseDto {
         this.answerPostId = entity.getAnswerPostId();
         this.questionPostId = entity.getQuestionPost().getQuestionPostId();
         this.user = new UsersResponseDto(entity.getUser());
-        this.likeNum = entity.getLikeNum();
-
+        this.likeNum = (long) entity.getLikeLogAnswerPostsList().size();
         this.content = entity.getContent();
         this.createdAt = entity.getCreatedAt();
         this.updatedAt = entity.getUpdatedAt();

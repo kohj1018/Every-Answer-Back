@@ -1,6 +1,7 @@
 package com.fineapple.everyanswerback.domain.answerPosts;
 
 import com.fineapple.everyanswerback.domain.BaseTimeEntity;
+import com.fineapple.everyanswerback.domain.likeLogAnswerPosts.LikeLogAnswerPosts;
 import com.fineapple.everyanswerback.domain.questionPosts.QuestionPosts;
 import com.fineapple.everyanswerback.domain.users.Users;
 import com.fineapple.everyanswerback.web.answerPosts.dto.AnswerPostsUpdateRequestDto;
@@ -9,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -34,11 +37,14 @@ public class AnswerPosts extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    @OneToMany(mappedBy = "answerPost") // likeLogAnswerPosts 와의 양방향 매핑을 위해 추가
+    private List<LikeLogAnswerPosts> likeLogAnswerPostsList = new ArrayList<>();
+
     @Builder
-    public AnswerPosts(QuestionPosts questionPost, Users user, Long likeNum, String content) {
+    public AnswerPosts(QuestionPosts questionPost, Users user, String content) {
         this.questionPost = questionPost;
         this.user = user;
-        this.likeNum = likeNum;
+        this.likeNum = 0L;  // default value
         this.content = content;
     }
 

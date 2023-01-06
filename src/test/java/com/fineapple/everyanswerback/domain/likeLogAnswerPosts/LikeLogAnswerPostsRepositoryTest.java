@@ -1,11 +1,14 @@
-package com.fineapple.everyanswerback.domain.answerPosts;
+package com.fineapple.everyanswerback.domain.likeLogAnswerPosts;
 
+import com.fineapple.everyanswerback.domain.answerPosts.AnswerPosts;
+import com.fineapple.everyanswerback.domain.answerPosts.AnswerPostsRepository;
 import com.fineapple.everyanswerback.domain.deptClass.DeptClass;
 import com.fineapple.everyanswerback.domain.deptClass.DeptClassRepository;
 import com.fineapple.everyanswerback.domain.questionPosts.QuestionPosts;
 import com.fineapple.everyanswerback.domain.questionPosts.QuestionPostsRepository;
 import com.fineapple.everyanswerback.domain.users.Users;
 import com.fineapple.everyanswerback.domain.users.UsersRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,17 +16,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-class AnswerPostsRepositoryTest {
+class LikeLogAnswerPostsRepositoryTest {
 
     @Autowired
-    AnswerPostsRepository answerPostsRepository;
+    LikeLogAnswerPostsRepository likeLogAnswerPostsRepository;
 
     @Autowired
     DeptClassRepository deptClassRepository;
@@ -34,8 +36,12 @@ class AnswerPostsRepositoryTest {
     @Autowired
     QuestionPostsRepository questionPostsRepository;
 
+    @Autowired
+    AnswerPostsRepository answerPostsRepository;
+
     @AfterEach
     public void cleanup() {
+        likeLogAnswerPostsRepository.deleteAll();
         answerPostsRepository.deleteAll();
         questionPostsRepository.deleteAll();
         usersRepository.deleteAll();
@@ -43,7 +49,7 @@ class AnswerPostsRepositoryTest {
     }
 
     @Test
-    public void 답변글_저장_및_불러오기() {
+    public void 추천기록_저장_및_불러오기() {
         //given
         // DeptClass 저장
         DeptClass deptClass = DeptClass.builder()
@@ -55,61 +61,50 @@ class AnswerPostsRepositoryTest {
         deptClassRepository.save(deptClass);
 
         // Users 저장
-        String nickname = "test1";
-        String deptName = "컴공";
-        String univ = "한양대";
-        int entranceYear = 20;
-        String oauthId = "testOauth";
-        String refreshToken = "testRefreshToken";
-        boolean isDelete = true;
-
         Users user = Users.builder()
                 .deptClass(deptClass)
-                .nickname(nickname)
-                .deptName(deptName)
-                .univ(univ)
-                .entranceYear(entranceYear)
-                .oauthId(oauthId)
-                .refreshToken(refreshToken)
-                .isDelete(isDelete)
+                .nickname("test1")
+                .deptName("컴공")
+                .univ("한양대")
+                .entranceYear(20)
+                .oauthId("testOauth")
+                .refreshToken("testRefreshToken")
+                .isDelete(false)
                 .build();
 
         usersRepository.save(user);
 
         // QuestionPosts 저장
-        String questionTitle = "test 제목";
-        String questionContent = "test 내용";
-
         QuestionPosts questionPost = QuestionPosts.builder()
                 .user(user)
                 .deptClass(deptClass)
-                .title(questionTitle)
-                .content(questionContent)
+                .title("test 제목")
+                .content("test 내용")
                 .build();
 
         questionPostsRepository.save(questionPost);
 
         // AnswerPosts 저장
-        String answerContent = "test 답변 본문입니다.";
-
-        answerPostsRepository.save(AnswerPosts.builder()
+        AnswerPosts answerPost = AnswerPosts.builder()
                 .questionPost(questionPost)
                 .user(user)
-                .content(answerContent)
+                .content("test 답변 본문입니다.")
+                .build();
+
+        answerPostsRepository.save(answerPost);
+
+        // LikeLogAnswerPosts 저장
+        likeLogAnswerPostsRepository.save(LikeLogAnswerPosts.builder()
+                .user(user)
+                .answerPost(answerPost)
                 .build());
 
-
-        // 비교를 위한 기준 시간 변수 초기화
-        LocalDateTime time = LocalDateTime.of(2019, 11, 25, 0, 0, 0);
-
         //when
-        List<AnswerPosts> answerPostsList = answerPostsRepository.findAll();
+        List<LikeLogAnswerPosts> likeLogAnswerPostsList = likeLogAnswerPostsRepository.findAll();
 
         //then
-        AnswerPosts answerPost = answerPostsList.get(0);
-        assertThat(answerPost.getQuestionPost().getQuestionPostId()).isEqualTo(questionPost.getQuestionPostId());
-        assertThat(answerPost.getUser().getUserId()).isEqualTo(user.getUserId());
-        assertThat(answerPost.getContent()).isEqualTo(answerContent);
-        assertThat(answerPost.getCreatedAt()).isAfter(time);
+        LikeLogAnswerPosts likeLogAnswerPost = likeLogAnswerPostsList.get(0);
+        assertThat(likeLogAnswerPost.getUser().getUserId()).isEqualTo(user.getUserId());
+        assertThat(likeLogAnswerPost.getAnswerPost().getAnswerPostId()).isEqualTo(answerPost.getAnswerPostId());
     }
 }
