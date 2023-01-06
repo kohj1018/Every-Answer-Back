@@ -8,6 +8,7 @@ import com.fineapple.everyanswerback.web.deptClass.dto.DeptClassSaveRequestDto;
 import com.fineapple.everyanswerback.web.users.dto.UsersSaveRequestDto;
 import com.fineapple.everyanswerback.web.users.dto.UsersUpdateRequestDto;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,26 @@ public class UsersApiControllerTest {
     @Autowired
     private UsersRepository usersRepository;
 
+    // DeptClass 저장
+    DeptClass deptClass = DeptClass.builder()
+            .deptId(100L)
+            .college("소융대")
+            .name("소프트웨어")
+            .build();
+
+    // DeptClass2 저장
+    DeptClassSaveRequestDto deptClassSaveRequestDto2 =  DeptClassSaveRequestDto.builder()
+            .deptId(200L)
+            .college("소융대2")
+            .name("소프트웨어2")
+            .build();
+
+    @BeforeEach
+    public void setup() throws Exception {
+        deptClassRepository.save(deptClass);
+        deptClassRepository.save(deptClassSaveRequestDto2.toEntity());
+    }
+
     @AfterEach
     public void tearDown() throws Exception {
         usersRepository.deleteAll();
@@ -50,15 +71,6 @@ public class UsersApiControllerTest {
     @Test
     public void Users_등록된다() throws Exception {
         //given
-        // DeptClass 저장
-        DeptClass deptClass = DeptClass.builder()
-                .deptId(100L)
-                .college("소융대")
-                .name("소프트웨어")
-                .build();
-
-        deptClassRepository.save(deptClass);
-
         // UsersSaveRequestDto 생성
         String nickname = "test1";
         String deptName = "컴공";
@@ -110,15 +122,6 @@ public class UsersApiControllerTest {
         //given
 
         // 초기 저장 값
-        // DeptClass 저장
-        DeptClassSaveRequestDto deptClassSaveRequestDto = DeptClassSaveRequestDto.builder()
-                .deptId(100L)
-                .college("소융대")
-                .name("소프트웨어")
-                .build();
-
-        deptClassRepository.save(deptClassSaveRequestDto.toEntity());
-
         // Users 저장
         String nickname = "test1";
         String deptName = "컴공";
@@ -129,7 +132,7 @@ public class UsersApiControllerTest {
         Boolean isDelete = true;
 
         Users savedUsers = usersRepository.save(Users.builder()
-                .deptClass(deptClassSaveRequestDto.toEntity())
+                .deptClass(deptClass)
                 .nickname(nickname)
                 .deptName(deptName)
                 .univ(univ)
@@ -142,15 +145,6 @@ public class UsersApiControllerTest {
         Long updateId = savedUsers.getUserId();
 
         // 이후 수정 값
-        // DeptClass2 저장
-        DeptClassSaveRequestDto deptClassSaveRequestDto2 =  DeptClassSaveRequestDto.builder()
-                .deptId(200L)
-                .college("소융대2")
-                .name("소프트웨어2")
-                .build();
-
-        deptClassRepository.save(deptClassSaveRequestDto2.toEntity());
-
         // UsersUpdateRequestDto 생성
         String nickname2 = "test2";
         String deptName2 = "컴공2";

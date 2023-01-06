@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -31,8 +32,18 @@ public class AnswerPostsService {
         return id;
     }
 
-    // TODO: questionPosts 에 단 answerPosts 들 한꺼번에 받을 수 있게하는 함수 구현하기
-    public List<AnswerPostsResponseDto> findByQuestionPostsId(Long id) {
-        return null;
+    // TODO: questionPosts(질문글)에 단 answerPosts(답변글)들을 한꺼번에 받을 수 있게 하는 api 구현하기 -> 구현 완료 but, 테스트 필요
+    public List<AnswerPostsResponseDto> findByQuestionPostId(Long questionPostId) {
+        List<AnswerPosts> entityList = answerPostsRepository.findByQuestionPostId(questionPostId);
+
+        List<AnswerPostsResponseDto> responseDtoList = new ArrayList<>();
+
+        if (entityList != null && !entityList.isEmpty()) {
+            entityList.forEach(entity -> {
+                responseDtoList.add(new AnswerPostsResponseDto(entity));
+            });
+        }
+
+        return responseDtoList;
     }
 }
