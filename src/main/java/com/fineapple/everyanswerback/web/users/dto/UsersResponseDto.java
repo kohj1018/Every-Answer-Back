@@ -1,13 +1,14 @@
 package com.fineapple.everyanswerback.web.users.dto;
 
-import com.fineapple.everyanswerback.domain.deptClass.DeptClass;
 import com.fineapple.everyanswerback.domain.users.Users;
 import com.fineapple.everyanswerback.web.deptClass.dto.DeptClassResponseDto;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
+@NoArgsConstructor
 public class UsersResponseDto {
 
     private Long userId;

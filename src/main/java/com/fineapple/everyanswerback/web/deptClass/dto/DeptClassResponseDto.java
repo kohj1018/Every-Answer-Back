@@ -2,8 +2,10 @@ package com.fineapple.everyanswerback.web.deptClass.dto;
 
 import com.fineapple.everyanswerback.domain.deptClass.DeptClass;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class DeptClassResponseDto {
 
     private Long deptId;

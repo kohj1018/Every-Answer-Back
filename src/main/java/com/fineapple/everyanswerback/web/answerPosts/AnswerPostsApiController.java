@@ -26,7 +26,7 @@ public class AnswerPostsApiController {
     }
 
     // TODO: questionPosts(질문글)에 단 answerPosts(답변글)들을 한꺼번에 받을 수 있게 하는 api 구현하기
-    @GetMapping("/api/v1/answerPosts")
+    @RequestMapping("/api/v1/answerPosts")
     public List<AnswerPostsResponseDto> findByQuestionPostId(@RequestParam Long questionPostId) {
         return answerPostsService.findByQuestionPostId(questionPostId);
     }

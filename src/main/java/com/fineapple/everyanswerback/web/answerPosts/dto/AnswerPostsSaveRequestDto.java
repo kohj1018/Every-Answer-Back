@@ -16,10 +16,10 @@ public class AnswerPostsSaveRequestDto {
     private String content;
 
     @Builder
-    public AnswerPostsSaveRequestDto(QuestionPosts questionPost, Users user, Long likeNum, String content) {
+    public AnswerPostsSaveRequestDto(QuestionPosts questionPost, Users user, String content) {
         this.questionPost = questionPost;
         this.user = user;
-        this.likeNum = likeNum;
+        this.likeNum = 0L;  // default value
         this.content = content;
     }
 

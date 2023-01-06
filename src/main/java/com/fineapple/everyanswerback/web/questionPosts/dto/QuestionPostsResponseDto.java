@@ -1,11 +1,8 @@
 package com.fineapple.everyanswerback.web.questionPosts.dto;
 
-import com.fineapple.everyanswerback.domain.deptClass.DeptClass;
 import com.fineapple.everyanswerback.domain.questionPosts.QuestionPosts;
-import com.fineapple.everyanswerback.domain.users.Users;
 import com.fineapple.everyanswerback.web.deptClass.dto.DeptClassResponseDto;
 import com.fineapple.everyanswerback.web.users.dto.UsersResponseDto;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

@@ -43,7 +43,6 @@ public class AnswerPosts extends BaseTimeEntity {
     }
 
     public void update(AnswerPostsUpdateRequestDto requestDto) {
-        this.likeNum = requestDto.getLikeNum();
         this.content = requestDto.getContent();
     }
 }
