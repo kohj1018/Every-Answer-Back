@@ -54,3 +54,4 @@ public class QuestionPosts extends BaseTimeEntity {
         this.content = requestDto.getContent();
     }
 }
+

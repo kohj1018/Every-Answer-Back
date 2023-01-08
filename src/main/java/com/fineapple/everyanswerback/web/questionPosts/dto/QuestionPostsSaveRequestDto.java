@@ -10,20 +10,20 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class QuestionPostsSaveRequestDto {
-    private Users user;
-    private DeptClass deptClass;
+    private Long userId;
+    private Long deptClassId;
     private String title;
     private String content;
 
     @Builder
-    public QuestionPostsSaveRequestDto(Users user, DeptClass deptClass, String title, String content) {
-        this.user = user;
-        this.deptClass = deptClass;
+    public QuestionPostsSaveRequestDto(Long userId, Long deptClassId, String title, String content) {
+        this.userId = userId;
+        this.deptClassId = deptClassId;
         this.title = title;
         this.content = content;
     }
 
-    public QuestionPosts toEntity() {
+    public QuestionPosts toEntity(Users user, DeptClass deptClass) {
         return QuestionPosts.builder()
                 .user(user)
                 .deptClass(deptClass)

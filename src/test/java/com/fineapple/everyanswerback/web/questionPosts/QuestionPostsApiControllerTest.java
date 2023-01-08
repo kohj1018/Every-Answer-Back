@@ -97,8 +97,8 @@ class QuestionPostsApiControllerTest {
         String content = "test 내용";
 
         QuestionPostsSaveRequestDto requestDto = QuestionPostsSaveRequestDto.builder()
-                .user(user)
-                .deptClass(deptClass)
+                .userId(user.getUserId())
+                .deptClassId(deptClass.getDeptId())
                 .title(title)
                 .content(content)
                 .build();
