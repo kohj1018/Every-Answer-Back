@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @Service
@@ -32,6 +33,10 @@ public class AnswerPostsService {
 
         Users user = usersRepository.findById(requestDto.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다. id=" + requestDto.getUserId()));
+
+        if (Objects.equals(questionPost.getUser().getUserId(), user.getUserId())) {
+            throw new IllegalArgumentException("질문글 작성자는 답변글을 작성할 수 없습니다!");
+        }
 
         return answerPostsRepository.save(requestDto.toEntity(questionPost, user)).getAnswerPostId();
     }
