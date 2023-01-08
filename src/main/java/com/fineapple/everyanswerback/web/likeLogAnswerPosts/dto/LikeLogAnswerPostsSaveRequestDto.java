@@ -10,16 +10,16 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class LikeLogAnswerPostsSaveRequestDto {
-    private Users user;
-    private AnswerPosts answerPost;
+    private Long userId;
+    private Long answerPostId;
 
     @Builder
-    public LikeLogAnswerPostsSaveRequestDto(Users user, AnswerPosts answerPost) {
-        this.user = user;
-        this.answerPost = answerPost;
+    public LikeLogAnswerPostsSaveRequestDto(Long userId, Long answerPostId) {
+        this.userId = userId;
+        this.answerPostId = answerPostId;
     }
 
-    public LikeLogAnswerPosts toEntity() {
+    public LikeLogAnswerPosts toEntity(Users user, AnswerPosts answerPost) {
         return LikeLogAnswerPosts.builder()
                 .user(user)
                 .answerPost(answerPost)

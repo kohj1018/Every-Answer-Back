@@ -130,8 +130,8 @@ class LikeLogAnswerPostsApiControllerTest {
         //given
         // LikeLogAnswerPostsSaveRequestDto 생성
         LikeLogAnswerPostsSaveRequestDto requestDto = LikeLogAnswerPostsSaveRequestDto.builder()
-                .user(user)
-                .answerPost(answerPost)
+                .userId(user.getUserId())
+                .answerPostId(answerPost.getAnswerPostId())
                 .build();
 
         String url = "http://localhost:" + port + "/api/v1/likeLogAnswerPosts";
