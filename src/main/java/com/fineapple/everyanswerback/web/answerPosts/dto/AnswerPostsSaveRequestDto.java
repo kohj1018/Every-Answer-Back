@@ -10,20 +10,20 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class AnswerPostsSaveRequestDto {
-    private QuestionPosts questionPost;
-    private Users user;
+    private Long questionPostId;
+    private Long userId;
     private Long likeNum;
     private String content;
 
     @Builder
-    public AnswerPostsSaveRequestDto(QuestionPosts questionPost, Users user, String content) {
-        this.questionPost = questionPost;
-        this.user = user;
+    public AnswerPostsSaveRequestDto(Long questionPostId, Long userId, String content) {
+        this.questionPostId = questionPostId;
+        this.userId = userId;
         this.likeNum = 0L;  // default value
         this.content = content;
     }
 
-    public AnswerPosts toEntity() {
+    public AnswerPosts toEntity(QuestionPosts questionPost, Users user) {
         return AnswerPosts.builder()
                 .questionPost(questionPost)
                 .user(user)

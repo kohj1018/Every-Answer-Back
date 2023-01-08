@@ -138,8 +138,8 @@ class AnswerPostsApiControllerTest {
         String content = "test 답변글 본문";
 
         AnswerPostsSaveRequestDto requestDto = AnswerPostsSaveRequestDto.builder()
-                .questionPost(questionPost)
-                .user(user)
+                .questionPostId(questionPost.getQuestionPostId())
+                .userId(user.getUserId())
                 .content(content)
                 .build();
 

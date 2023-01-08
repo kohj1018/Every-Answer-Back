@@ -2,6 +2,10 @@ package com.fineapple.everyanswerback.service;
 
 import com.fineapple.everyanswerback.domain.answerPosts.AnswerPosts;
 import com.fineapple.everyanswerback.domain.answerPosts.AnswerPostsRepository;
+import com.fineapple.everyanswerback.domain.questionPosts.QuestionPosts;
+import com.fineapple.everyanswerback.domain.questionPosts.QuestionPostsRepository;
+import com.fineapple.everyanswerback.domain.users.Users;
+import com.fineapple.everyanswerback.domain.users.UsersRepository;
 import com.fineapple.everyanswerback.web.answerPosts.dto.AnswerPostsResponseDto;
 import com.fineapple.everyanswerback.web.answerPosts.dto.AnswerPostsSaveRequestDto;
 import com.fineapple.everyanswerback.web.answerPosts.dto.AnswerPostsUpdateRequestDto;
@@ -17,9 +21,19 @@ import java.util.List;
 public class AnswerPostsService {
     private final AnswerPostsRepository answerPostsRepository;
 
+    private final QuestionPostsRepository questionPostsRepository;
+
+    private final UsersRepository usersRepository;
+
     @Transactional
     public Long save(AnswerPostsSaveRequestDto requestDto) {
-        return answerPostsRepository.save(requestDto.toEntity()).getAnswerPostId();
+        QuestionPosts questionPost = questionPostsRepository.findById(requestDto.getQuestionPostId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다. id=" + requestDto.getQuestionPostId()));
+
+        Users user = usersRepository.findById(requestDto.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다. id=" + requestDto.getUserId()));
+
+        return answerPostsRepository.save(requestDto.toEntity(questionPost, user)).getAnswerPostId();
     }
 
     @Transactional
