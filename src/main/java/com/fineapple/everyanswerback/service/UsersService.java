@@ -1,5 +1,7 @@
 package com.fineapple.everyanswerback.service;
 
+import com.fineapple.everyanswerback.domain.deptClass.DeptClass;
+import com.fineapple.everyanswerback.domain.deptClass.DeptClassRepository;
 import com.fineapple.everyanswerback.domain.users.Users;
 import com.fineapple.everyanswerback.domain.users.UsersRepository;
 import com.fineapple.everyanswerback.web.users.dto.UsersResponseDto;
@@ -13,10 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UsersService {
     private final UsersRepository usersRepository;
+    private final DeptClassRepository deptClassRepository;
 
     @Transactional
     public Long save(UsersSaveRequestDto requestDto) {
-        return usersRepository.save(requestDto.toEntity()).getUserId();
+        DeptClass deptClass = deptClassRepository.findById(requestDto.getDeptId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 전공분류가 존재하지 않습니다. id=" + requestDto.getDeptId()));
+
+        return usersRepository.save(requestDto.toEntity(deptClass)).getUserId();
     }
 
     @Transactional
@@ -24,7 +30,10 @@ public class UsersService {
         Users users = usersRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다. id=" + id));
 
-        users.update(requestDto);
+        DeptClass deptClass = deptClassRepository.findById(requestDto.getDeptId())
+                        .orElseThrow(() -> new IllegalArgumentException("해당 전공분류가 존재하지 않습니다. id=" + requestDto.getDeptId()));
+
+        users.update(requestDto, deptClass);
 
         return id;
     }

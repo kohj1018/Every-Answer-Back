@@ -98,7 +98,7 @@ class QuestionPostsApiControllerTest {
 
         QuestionPostsSaveRequestDto requestDto = QuestionPostsSaveRequestDto.builder()
                 .userId(user.getUserId())
-                .deptClassId(deptClass.getDeptId())
+                .deptId(deptClass.getDeptId())
                 .title(title)
                 .content(content)
                 .build();

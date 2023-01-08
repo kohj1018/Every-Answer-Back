@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class UsersSaveRequestDto {
-    private DeptClass deptClass;
+    private Long deptId;
     private String nickname;
     private String deptName;
     private String univ;
@@ -19,8 +19,8 @@ public class UsersSaveRequestDto {
     private Boolean isDelete;
 
     @Builder
-    public UsersSaveRequestDto(DeptClass deptClass, String nickname, String deptName, String univ, int entranceYear, String oauthId, String refreshToken, Boolean isDelete) {
-        this.deptClass = deptClass;
+    public UsersSaveRequestDto(Long deptId, String nickname, String deptName, String univ, int entranceYear, String oauthId, String refreshToken, Boolean isDelete) {
+        this.deptId = deptId;
         this.nickname = nickname;
         this.deptName = deptName;
         this.univ = univ;
@@ -30,7 +30,7 @@ public class UsersSaveRequestDto {
         this.isDelete = isDelete;
     }
 
-    public Users toEntity() {
+    public Users toEntity(DeptClass deptClass) {
         return Users.builder()
                 .deptClass(deptClass)
                 .nickname(nickname)

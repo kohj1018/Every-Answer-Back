@@ -11,14 +11,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class QuestionPostsSaveRequestDto {
     private Long userId;
-    private Long deptClassId;
+    private Long deptId;
     private String title;
     private String content;
 
     @Builder
-    public QuestionPostsSaveRequestDto(Long userId, Long deptClassId, String title, String content) {
+    public QuestionPostsSaveRequestDto(Long userId, Long deptId, String title, String content) {
         this.userId = userId;
-        this.deptClassId = deptClassId;
+        this.deptId = deptId;
         this.title = title;
         this.content = content;
     }

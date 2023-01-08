@@ -11,18 +11,17 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 public class UsersUpdateRequestDto {
-    private DeptClass deptClass;
+    private Long deptId;
     private String nickname;
     private String deptName;
     private String univ;
     private int entranceYear;
     private String oauthId;
     private String refreshToken;
-    private LocalDateTime updatedAt;
     private Boolean isDelete;
 
     public UsersUpdateRequestDto(Users entity) {
-        this.deptClass = entity.getDeptClass();
+        this.deptId = entity.getDeptClass().getDeptId();
         this.nickname = entity.getNickname();
         this.deptName = entity.getDeptName();
         this.univ = entity.getUniv();
@@ -33,15 +32,14 @@ public class UsersUpdateRequestDto {
     }
 
     @Builder
-    public UsersUpdateRequestDto(DeptClass deptClass, String nickname, String deptName, String univ, int entranceYear, String oauthId, String refreshToken, LocalDateTime updatedAt, Boolean isDelete) {
-        this.deptClass = deptClass;
+    public UsersUpdateRequestDto(Long deptId, String nickname, String deptName, String univ, int entranceYear, String oauthId, String refreshToken, Boolean isDelete) {
+        this.deptId = deptId;
         this.nickname = nickname;
         this.deptName = deptName;
         this.univ = univ;
         this.entranceYear = entranceYear;
         this.oauthId = oauthId;
         this.refreshToken = refreshToken;
-        this.updatedAt = updatedAt;
         this.isDelete = isDelete;
     }
 }

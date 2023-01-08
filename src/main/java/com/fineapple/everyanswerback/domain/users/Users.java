@@ -70,8 +70,8 @@ public class Users extends BaseTimeEntity {
         this.isDelete = isDelete;
     }
 
-    public void update(UsersUpdateRequestDto requestDto) {
-        this.deptClass = requestDto.getDeptClass();
+    public void update(UsersUpdateRequestDto requestDto, DeptClass deptClass) {
+        this.deptClass = deptClass;
         this.nickname = requestDto.getNickname();
         this.deptName = requestDto.getDeptName();
         this.univ = requestDto.getUniv();

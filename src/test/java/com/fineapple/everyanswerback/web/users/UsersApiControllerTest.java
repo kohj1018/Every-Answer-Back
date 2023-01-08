@@ -81,7 +81,7 @@ public class UsersApiControllerTest {
         Boolean isDelete = true;
 
         UsersSaveRequestDto requestDto = UsersSaveRequestDto.builder()
-                .deptClass(deptClass)
+                .deptId(deptClass.getDeptId())
                 .nickname(nickname)
                 .deptName(deptName)
                 .univ(univ)
@@ -155,7 +155,7 @@ public class UsersApiControllerTest {
         Boolean isDelete2 = false;
 
         UsersUpdateRequestDto requestDto = UsersUpdateRequestDto.builder()
-                .deptClass(deptClassSaveRequestDto2.toEntity())
+                .deptId(deptClassSaveRequestDto2.getDeptId())
                 .nickname(nickname2)
                 .deptName(deptName2)
                 .univ(univ2)

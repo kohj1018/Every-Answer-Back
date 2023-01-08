@@ -27,8 +27,8 @@ public class QuestionPostsService {
         Users user = usersRepository.findById(requestDto.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다. id=" + requestDto.getUserId()));
 
-        DeptClass deptClass = deptClassRepository.findById(requestDto.getDeptClassId())
-                .orElseThrow(() -> new IllegalArgumentException("해당 전공분류가 존재하지 않습니다. id=" + requestDto.getDeptClassId()));
+        DeptClass deptClass = deptClassRepository.findById(requestDto.getDeptId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 전공분류가 존재하지 않습니다. id=" + requestDto.getDeptId()));
 
         return questionPostsRepository.save(requestDto.toEntity(user, deptClass)).getQuestionPostId();
     }
