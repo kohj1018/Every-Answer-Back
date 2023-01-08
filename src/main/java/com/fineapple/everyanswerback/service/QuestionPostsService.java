@@ -38,7 +38,10 @@ public class QuestionPostsService {
         QuestionPosts questionPost = questionPostsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다. id=" + id));
 
-        questionPost.update(requestDto);
+        DeptClass deptClass = deptClassRepository.findById(requestDto.getDeptId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 전공분류가 존재하지 않습니다. id=" + requestDto.getDeptId()));
+
+        questionPost.update(requestDto, deptClass);
 
         return id;
     }

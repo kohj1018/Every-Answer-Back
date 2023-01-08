@@ -1,12 +1,9 @@
 package com.fineapple.everyanswerback.web.users.dto;
 
-import com.fineapple.everyanswerback.domain.deptClass.DeptClass;
 import com.fineapple.everyanswerback.domain.users.Users;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor

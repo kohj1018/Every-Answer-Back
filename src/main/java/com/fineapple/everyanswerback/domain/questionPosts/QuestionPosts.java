@@ -48,8 +48,8 @@ public class QuestionPosts extends BaseTimeEntity {
         this.content = content;
     }
 
-    public void update(QuestionPostsUpdateRequestDto requestDto) {
-        this.deptClass = requestDto.getDeptClass();
+    public void update(QuestionPostsUpdateRequestDto requestDto, DeptClass deptClass) {
+        this.deptClass = deptClass;
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
     }

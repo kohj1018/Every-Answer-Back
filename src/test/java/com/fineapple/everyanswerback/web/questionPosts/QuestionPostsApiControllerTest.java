@@ -147,7 +147,7 @@ class QuestionPostsApiControllerTest {
         String content2 = "test 본문2";
 
         QuestionPostsUpdateRequestDto requestDto = QuestionPostsUpdateRequestDto.builder()
-                .deptClass(deptClassSaveRequestDto2.toEntity())
+                .deptId(deptClassSaveRequestDto2.getDeptId())
                 .title(title2)
                 .content(content2)
                 .build();
