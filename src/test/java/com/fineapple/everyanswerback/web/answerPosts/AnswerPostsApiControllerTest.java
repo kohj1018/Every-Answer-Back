@@ -139,7 +139,7 @@ class AnswerPostsApiControllerTest {
 
         AnswerPostsSaveRequestDto requestDto = AnswerPostsSaveRequestDto.builder()
                 .questionPostId(questionPost.getQuestionPostId())
-                .userId(user.getUserId())
+                .userId(user2.getUserId())
                 .content(content)
                 .build();
 
@@ -157,7 +157,7 @@ class AnswerPostsApiControllerTest {
 
         List<AnswerPosts> all = answerPostsRepository.findAll();
         assertThat(all.get(0).getQuestionPost().getQuestionPostId()).isEqualTo(questionPost.getQuestionPostId());
-        assertThat(all.get(0).getUser().getUserId()).isEqualTo(user.getUserId());
+        assertThat(all.get(0).getUser().getUserId()).isEqualTo(user2.getUserId());
         assertThat(all.get(0).getLikeNum()).isEqualTo(0);
         assertThat(all.get(0).getContent()).isEqualTo(content);
         assertThat(all.get(0).getCreatedAt()).isAfter(time);
