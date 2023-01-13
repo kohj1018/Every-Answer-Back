@@ -6,10 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,10 +25,10 @@ public class DeptClass {
     @Column(length = 30, nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "deptClass")  // Users 와의 양방향 매핑을 위해 추가
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "deptClass")  // Users 와의 양방향 매핑을 위해 추가
     private List<Users> usersList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "deptClass")  // QuestionPosts 와의 양방향 매핑을 위해 추가
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "deptClass")  // QuestionPosts 와의 양방향 매핑을 위해 추가
     private List<QuestionPosts> questionPostsList = new ArrayList<>();
 
     @Builder

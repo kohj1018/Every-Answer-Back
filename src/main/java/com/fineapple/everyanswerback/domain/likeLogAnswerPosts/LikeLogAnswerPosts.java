@@ -18,11 +18,11 @@ public class LikeLogAnswerPosts {
     @Column(name = "likeLog_answer_posts_id")
     private Long likeLogAnswerPostsId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private Users user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "answer_post_id", nullable = false)
     private AnswerPosts answerPost;
 

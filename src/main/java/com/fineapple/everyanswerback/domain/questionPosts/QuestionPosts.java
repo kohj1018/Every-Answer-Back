@@ -23,11 +23,11 @@ public class QuestionPosts extends BaseTimeEntity {
     @Column(name = "question_post_id")
     private Long questionPostId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private Users user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dept_id", nullable = false)
     private DeptClass deptClass;
 
@@ -37,7 +37,7 @@ public class QuestionPosts extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @OneToMany(mappedBy = "questionPost")   // AnswerPosts 와의 양방향 매핑을 위해 추가
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "questionPost")   // AnswerPosts 와의 양방향 매핑을 위해 추가
     private List<AnswerPosts> answerPostsList = new ArrayList<>();
 
     @Builder

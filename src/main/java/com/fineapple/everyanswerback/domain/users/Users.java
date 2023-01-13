@@ -24,7 +24,7 @@ public class Users extends BaseTimeEntity {
     @Column(name = "user_id")
     private Long userId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dept_id")
     private DeptClass deptClass;
 
@@ -49,13 +49,13 @@ public class Users extends BaseTimeEntity {
     @Column(name = "is_delete", nullable = false)
     private Boolean isDelete;
 
-    @OneToMany(mappedBy = "user")  // QuestionPosts 와의 양방향 매핑을 위해 추가
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")  // QuestionPosts 와의 양방향 매핑을 위해 추가
     private List<QuestionPosts> questionPostsList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")   // AnswerPosts 와의 양방향 매핑을 위해 추가
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")   // AnswerPosts 와의 양방향 매핑을 위해 추가
     private List<AnswerPosts> answerPostsList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")   // LikeLogAnswerPosts 와의 양방향 매핑을 위해 추가
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")   // LikeLogAnswerPosts 와의 양방향 매핑을 위해 추가
     private List<LikeLogAnswerPosts> likeLogAnswerPostsList = new ArrayList<>();
 
     @Builder
