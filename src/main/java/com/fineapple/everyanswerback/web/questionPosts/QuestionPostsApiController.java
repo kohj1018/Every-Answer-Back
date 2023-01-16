@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Tag(name = "QuestionPosts", description = "질문글 관련 api 입니다.")
 @RequiredArgsConstructor
 @RestController
@@ -33,5 +35,12 @@ public class QuestionPostsApiController {
     @GetMapping("/{id}")
     public QuestionPostsResponseDto findById(@PathVariable Long id) {
         return questionPostsService.findById(id);
+    }
+
+    @Operation(summary = "질문글 무한스크롤")
+    @GetMapping()
+    public List<QuestionPostsResponseDto> getPostsLowerThanId(@RequestParam Long lastPostId, @RequestParam int size) {
+//        return questionPostsService.getPostsLowerThanId(lastPostId);
+        return questionPostsService.fetchPostPagesBy(lastPostId, size);
     }
 }

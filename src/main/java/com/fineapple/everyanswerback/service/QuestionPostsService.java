@@ -10,8 +10,14 @@ import com.fineapple.everyanswerback.web.questionPosts.dto.QuestionPostsResponse
 import com.fineapple.everyanswerback.web.questionPosts.dto.QuestionPostsSaveRequestDto;
 import com.fineapple.everyanswerback.web.questionPosts.dto.QuestionPostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -51,5 +57,35 @@ public class QuestionPostsService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다. id=" + id));
 
         return new QuestionPostsResponseDto(entity);
+    }
+
+//    public List<QuestionPostsResponseDto> getPostsLowerThanId(Long lastPostId) {
+//        List<QuestionPosts> entityList = questionPostsRepository.getPostsLowerThanId(lastPostId);
+//
+//        List<QuestionPostsResponseDto> responseDtoList = new ArrayList<>();
+//
+//        if (entityList != null && !entityList.isEmpty()) {
+//            entityList.forEach(entity -> {
+//                responseDtoList.add(new QuestionPostsResponseDto(entity));
+//            });
+//        }
+//
+//        return responseDtoList;
+//    }
+
+    public List<QuestionPostsResponseDto> fetchPostPagesBy(Long lastPostId, int size) {
+        PageRequest pageRequest = PageRequest.of(0, size);
+        Page<QuestionPosts> entityPage = questionPostsRepository.findByquestionPostIdLessThanOrderByquestionPostIdDesc(lastPostId, pageRequest);
+        List<QuestionPosts> entityList = entityPage.getContent();
+
+        List<QuestionPostsResponseDto> responseDtoList = new ArrayList<>();
+
+        if (entityList != null && !entityList.isEmpty()) {
+            entityList.forEach(entity -> {
+                responseDtoList.add(new QuestionPostsResponseDto(entity));
+            });
+        }
+
+        return responseDtoList;
     }
 }
