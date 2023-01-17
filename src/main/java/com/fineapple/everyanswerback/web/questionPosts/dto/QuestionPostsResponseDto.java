@@ -19,6 +19,8 @@ public class QuestionPostsResponseDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    private int answerPostsCnt;
+
     public QuestionPostsResponseDto(QuestionPosts entity) {
         this.questionPostId = entity.getQuestionPostId();
         this.user = new UsersResponseDto(entity.getUser());
@@ -27,5 +29,6 @@ public class QuestionPostsResponseDto {
         this.content = entity.getContent();
         this.createdAt = entity.getCreatedAt();
         this.updatedAt = entity.getUpdatedAt();
+        this.answerPostsCnt = entity.getAnswerPostsList().size();
     }
 }
