@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface LikeLogAnswerPostsRepository extends JpaRepository<LikeLogAnswerPosts, Long> {
 
     @Query(value = "SELECT l FROM likeLog_answer_posts l WHERE l.answerPost.answerPostId = ?1 AND l.user.userId = ?2")
-    Optional<LikeLogAnswerPosts> findByAnswerPostIdANDUserId(Long answerPostId, Long userId);
+    Optional<LikeLogAnswerPosts> findByAnswerPostIdAndUserId(Long answerPostId, Long userId);
 }

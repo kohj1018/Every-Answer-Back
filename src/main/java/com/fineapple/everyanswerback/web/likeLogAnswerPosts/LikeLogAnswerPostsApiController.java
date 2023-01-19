@@ -23,7 +23,13 @@ public class LikeLogAnswerPostsApiController {
 
     @Operation(summary = "추천 취소하기 (추천 기록 제거하기)")
     @DeleteMapping()
-    public void delete(@RequestParam Long userId, @RequestParam Long answerPostId) {
-        likeLogAnswerPostsService.delete(userId, answerPostId);
+    public void delete(@RequestParam Long answerPostId, @RequestParam Long userId) {
+        likeLogAnswerPostsService.delete(answerPostId, userId);
+    }
+
+    @Operation(summary = "사용자가 추천을 눌렀는지 확인하기")
+    @GetMapping()
+    public boolean getLikeLogByUserId(@RequestParam Long answerPostId, @RequestParam Long userId) {
+        return likeLogAnswerPostsService.findByAnswerPostIdAndUserId(answerPostId, userId);
     }
 }

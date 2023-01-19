@@ -22,7 +22,7 @@ public class LikeLogAnswerPostsService {
 
     @Transactional
     public Long save(LikeLogAnswerPostsSaveRequestDto requestDto) {
-        Optional<LikeLogAnswerPosts> log = likeLogAnswerPostsRepository.findByAnswerPostIdANDUserId(requestDto.getAnswerPostId(), requestDto.getUserId());
+        Optional<LikeLogAnswerPosts> log = likeLogAnswerPostsRepository.findByAnswerPostIdAndUserId(requestDto.getAnswerPostId(), requestDto.getUserId());
 
         Users user = usersRepository.findById(requestDto.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다. id=" + requestDto.getUserId()));
@@ -38,11 +38,19 @@ public class LikeLogAnswerPostsService {
     }
 
     @Transactional
-    public void delete(Long userId, Long answerPostId) {
-        Optional<LikeLogAnswerPosts> log = likeLogAnswerPostsRepository.findByAnswerPostIdANDUserId(userId, answerPostId);
+    public void delete(Long answerPostId, Long userId) {
+        Optional<LikeLogAnswerPosts> log = likeLogAnswerPostsRepository.findByAnswerPostIdAndUserId(answerPostId, userId);
 
         if (log.isPresent()) {
             likeLogAnswerPostsRepository.deleteById(log.get().getLikeLogAnswerPostsId());
+        } else {
+            throw new IllegalArgumentException("추천 기록이 존재하지 않습니다.");
         }
+    }
+
+    public boolean findByAnswerPostIdAndUserId(Long answerPostId, Long userId) {
+        Optional<LikeLogAnswerPosts> log = likeLogAnswerPostsRepository.findByAnswerPostIdAndUserId(answerPostId, userId);
+
+        return log.isPresent(); // log 존재 => true, log 존재 x => false
     }
 }
