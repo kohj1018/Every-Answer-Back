@@ -53,7 +53,7 @@ public class UsersService {
         if (entity.isPresent()) {
             return entity.get().getUserId();
         } else {
-            return null;
+            return -1L;
         }
     }
 }
