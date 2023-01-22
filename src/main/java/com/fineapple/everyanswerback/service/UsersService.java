@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Service
 public class UsersService {
@@ -43,5 +45,15 @@ public class UsersService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다. id=" + id));
 
         return new UsersResponseDto(entity);
+    }
+
+    public Long findByOauthId(String oauthId) {
+        Optional<Users> entity = usersRepository.findByOauthId(oauthId);
+
+        if (entity.isPresent()) {
+            return entity.get().getUserId();
+        } else {
+            return null;
+        }
     }
 }
