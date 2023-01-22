@@ -56,4 +56,10 @@ public class UsersService {
             return -1L;
         }
     }
+
+    public boolean findByNickname(String nickname) {
+        Optional<Users> entity = usersRepository.findByNickname(nickname);
+
+        return entity.isPresent();
+    }
 }

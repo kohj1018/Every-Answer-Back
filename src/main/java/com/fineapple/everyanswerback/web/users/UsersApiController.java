@@ -40,4 +40,10 @@ public class UsersApiController {
     public Long findByOauthId(@PathVariable String oauthId) {
         return usersService.findByOauthId(oauthId);
     }
+
+    @Operation(summary = "nickname 중복확인")
+    @GetMapping("/nicknameCheck/{nickname}")
+    public boolean findByNickname(@PathVariable String nickname) {
+        return usersService.findByNickname(nickname);
+    }
 }

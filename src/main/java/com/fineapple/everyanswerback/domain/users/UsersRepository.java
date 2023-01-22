@@ -9,4 +9,7 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
 
     @Query(value = "SELECT u FROM Users u WHERE u.oauthId = ?1")
     Optional<Users> findByOauthId(String oauthId);
+
+    @Query(value = "SELECT u FROM Users u WHERE u.nickname = ?1")
+    Optional<Users> findByNickname(String nickname);
 }
