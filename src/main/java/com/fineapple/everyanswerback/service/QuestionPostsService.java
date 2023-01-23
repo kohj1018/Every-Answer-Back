@@ -93,10 +93,8 @@ public class QuestionPostsService {
         return responseDtoList;
     }
 
-    public List<QuestionPostsResponseDto> findByTitleContainingOrContentContainingAndQuestionPostIdLessThanOrderByQuestionPostIdDesc(String searchTerm, Long lastPostId, int size) {
-        PageRequest pageRequest = PageRequest.of(0, size);
-        Page<QuestionPosts> entityPage = questionPostsRepository.findByTitleContainingOrContentContainingAndQuestionPostIdLessThanOrderByQuestionPostIdDesc(searchTerm, searchTerm, lastPostId, pageRequest);
-        List<QuestionPosts> entityList = entityPage.getContent();
+    public List<QuestionPostsResponseDto> findByTitleContainingOrContentContainingOrderByQuestionPostIdDesc(String searchTerm) {
+        List<QuestionPosts> entityList = questionPostsRepository.findByTitleContainingOrContentContainingOrderByQuestionPostIdDesc(searchTerm, searchTerm);
 
         List<QuestionPostsResponseDto> responseDtoList = new ArrayList<>();
 
