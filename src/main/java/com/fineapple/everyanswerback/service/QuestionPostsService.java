@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -94,13 +96,33 @@ public class QuestionPostsService {
     }
 
     public List<QuestionPostsResponseDto> findByTitleContainingOrContentContainingOrderByQuestionPostIdDesc(String searchTerm) {
-        List<QuestionPosts> entityList = questionPostsRepository.findByTitleContainingOrContentContainingOrderByQuestionPostIdDesc(searchTerm, searchTerm);
+        // 공백, 쉼표, 하이픈을 기준으로 split
+        String[] searchTermList = searchTerm.split("\\s|,|-");
 
         List<QuestionPostsResponseDto> responseDtoList = new ArrayList<>();
+        List<Long> idList = new ArrayList<>();
 
-        if (entityList != null && !entityList.isEmpty()) {
-            entityList.forEach(entity -> {
-                responseDtoList.add(new QuestionPostsResponseDto(entity));
+        for (String term : searchTermList) {
+            List<QuestionPosts> entityList = questionPostsRepository.findByTitleContainingOrContentContainingOrderByQuestionPostIdDesc(term, term);
+            if (entityList != null && !entityList.isEmpty()) {
+                entityList.forEach(entity -> {
+                    if (!idList.contains(entity.getQuestionPostId())) { // 중복된 검색 결과는 제외
+                        responseDtoList.add(new QuestionPostsResponseDto(entity));
+                        idList.add(entity.getQuestionPostId());
+                    }
+                });
+            }
+        }
+
+        if (!responseDtoList.isEmpty()) {   // 답변 수가 많은 것 순으로 정렬 후, 답변 수가 같다면 최근에 질문한 글 순으로 정렬
+            responseDtoList.sort(new Comparator<QuestionPostsResponseDto>() {
+                @Override
+                public int compare(QuestionPostsResponseDto p1, QuestionPostsResponseDto p2) {
+                    if (p1.getAnswerPostsCnt() == p2.getAnswerPostsCnt()) {
+                        return p2.getQuestionPostId().intValue() - p1.getQuestionPostId().intValue();
+                    }
+                    return p2.getAnswerPostsCnt() - p1.getAnswerPostsCnt();
+                }
             });
         }
 
