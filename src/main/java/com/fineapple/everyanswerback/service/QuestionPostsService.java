@@ -33,8 +33,12 @@ public class QuestionPostsService {
         Users user = usersRepository.findById(requestDto.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다. id=" + requestDto.getUserId()));
 
-        DeptClass deptClass = deptClassRepository.findById(requestDto.getDeptId())
-                .orElseThrow(() -> new IllegalArgumentException("해당 전공분류가 존재하지 않습니다. id=" + requestDto.getDeptId()));
+//        DeptClass deptClass = deptClassRepository.findById(requestDto.getDeptId())
+//                .orElseThrow(() -> new IllegalArgumentException("해당 전공분류가 존재하지 않습니다. id=" + requestDto.getDeptId()));
+
+        // TODO: 저장할 때 다른 전공 질문도 할 수 있게 따로 저장할 예정이나, 현재는 작성자의 전공분류대로 저장되도록 함. (위에는 주석처리)
+        DeptClass deptClass = deptClassRepository.findById(user.getDeptClass().getDeptId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 전공분류가 존재하지 않습니다. id=" + user.getDeptClass().getDeptId()));
 
         return questionPostsRepository.save(requestDto.toEntity(user, deptClass)).getQuestionPostId();
     }
