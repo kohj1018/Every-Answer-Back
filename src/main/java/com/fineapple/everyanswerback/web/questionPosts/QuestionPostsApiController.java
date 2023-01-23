@@ -43,4 +43,10 @@ public class QuestionPostsApiController {
 //        return questionPostsService.getPostsLowerThanId(lastPostId);
         return questionPostsService.fetchPostPagesBy(lastPostId, size);
     }
+
+    @Operation(summary = "질문글 검색하기")
+    @GetMapping()
+    public List<QuestionPostsResponseDto> getSearchedPost(@RequestParam String searchTerm, @RequestParam Long lastPostId, @RequestParam int size) {
+        return questionPostsService.findByTitleContainingAndContentContainingAndQuestionPostIdLessThanOrderByQuestionPostIdDesc(searchTerm, lastPostId, size);
+    }
 }

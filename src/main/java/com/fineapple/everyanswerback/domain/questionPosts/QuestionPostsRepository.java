@@ -16,4 +16,6 @@ public interface QuestionPostsRepository extends JpaRepository<QuestionPosts, Lo
 
     @Query("SELECT qp FROM question_posts qp WHERE qp.questionPostId < ?1 ORDER BY qp.questionPostId DESC")
     Page<QuestionPosts> findByquestionPostIdLessThanOrderByquestionPostIdDesc(Long lastPostId, PageRequest pageRequest);
+
+    Page<QuestionPosts> findByTitleContainingAndContentContainingAndQuestionPostIdLessThanOrderByQuestionPostIdDesc(String searchTerm1, String searchTerm2, Long lastPostId, PageRequest pageRequest);
 }
