@@ -45,8 +45,8 @@ public class QuestionPostsApiController {
     }
 
     @Operation(summary = "질문글 검색하기")
-    @GetMapping()
-    public List<QuestionPostsResponseDto> getSearchedPost(@RequestParam String searchTerm, @RequestParam Long lastPostId, @RequestParam int size) {
-        return questionPostsService.findByTitleContainingAndContentContainingAndQuestionPostIdLessThanOrderByQuestionPostIdDesc(searchTerm, lastPostId, size);
+    @GetMapping("/search/{searchTerm}")
+    public List<QuestionPostsResponseDto> getSearchedPost(@PathVariable String searchTerm, @RequestParam Long lastPostId, @RequestParam int size) {
+        return questionPostsService.findByTitleContainingOrContentContainingAndQuestionPostIdLessThanOrderByQuestionPostIdDesc(searchTerm, lastPostId, size);
     }
 }
