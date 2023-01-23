@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -29,6 +30,10 @@ public class LikeLogAnswerPostsService {
 
         AnswerPosts answerPost = answerPostsRepository.findById(requestDto.getAnswerPostId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 답변글이 존재하지 않습니다. id=" + requestDto.getAnswerPostId()));
+
+        if (Objects.equals(answerPost.getUser().getUserId(), user.getUserId())) {   // 만약 답변글 작성자와 추천 누르는 사람이 같은 사람이라면 -> 에러
+            throw new IllegalArgumentException("자신의 글은 추천할 수 없습니다.");
+        }
 
         if (log.isPresent()) {  // 이미 추천을 누른 기록이 있다면,
             throw new IllegalArgumentException("이미 추천을 눌렀습니다.");
