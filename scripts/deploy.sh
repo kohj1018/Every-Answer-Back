@@ -1,7 +1,7 @@
 #!/bin/bash
 
 REPOSITORY=/home/ec2-user/app/step2
-PROJECT_NAME=Every-Answer-Back
+PROJECT_NAME=every-answer-back
 
 echo "> Build 파일 복사"
 
