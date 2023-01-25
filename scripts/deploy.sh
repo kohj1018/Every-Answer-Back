@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Step2 배포 버전용 (무중단 X)
+
 REPOSITORY=/home/ec2-user/app/step2
 PROJECT_NAME=every-answer-back
 

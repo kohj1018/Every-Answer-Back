@@ -27,6 +27,6 @@ public class SwaggerConfig {
                 .info(new Info()
                         .title("EveryAnswer API")
                         .description("EveryAnswer 프로젝트 API 명세서입니다.")
-                        .version("v0.1.2"));
+                        .version("v0.1.3"));
     }
 }
