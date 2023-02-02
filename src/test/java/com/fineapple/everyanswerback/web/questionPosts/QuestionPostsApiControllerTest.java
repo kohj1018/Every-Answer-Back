@@ -75,6 +75,8 @@ class QuestionPostsApiControllerTest {
             .oauthId("dafsdafdafs")
             .refreshToken("fdsajflkdj")
             .isDelete(false)
+            .agreeTerms(true)
+            .isCertified(false)
             .build();
 
     @BeforeEach

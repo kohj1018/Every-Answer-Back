@@ -22,6 +22,8 @@ public class UsersResponseDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Boolean isDelete;
+    private Boolean agreeTerms;
+    private Boolean isCertified;
 
     public UsersResponseDto(Users entity) {
         this.userId = entity.getUserId();
@@ -35,5 +37,7 @@ public class UsersResponseDto {
         this.createdAt = entity.getCreatedAt();
         this.updatedAt = entity.getUpdatedAt();
         this.isDelete = entity.getIsDelete();
+        this.agreeTerms = entity.getAgreeTerms();
+        this.isCertified = entity.getIsCertified();
     }
 }

@@ -56,6 +56,8 @@ class QuestionPostsRepositoryTest {
         String oauthId = "testOauth";
         String refreshToken = "testRefreshToken";
         boolean isDelete = true;
+        boolean agreeTerms = true;
+        boolean isCertified = false;
 
         Users user = Users.builder()
                 .deptClass(deptClass)
@@ -66,6 +68,8 @@ class QuestionPostsRepositoryTest {
                 .oauthId(oauthId)
                 .refreshToken(refreshToken)
                 .isDelete(isDelete)
+                .agreeTerms(agreeTerms)
+                .isCertified(isCertified)
                 .build();
 
         usersRepository.save(user);

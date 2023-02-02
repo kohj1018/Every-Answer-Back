@@ -78,6 +78,8 @@ class LikeLogAnswerPostsApiControllerTest {
             .oauthId("dafsdafdafs")
             .refreshToken("fdsajflkdj")
             .isDelete(false)
+            .agreeTerms(true)
+            .isCertified(false)
             .build();
 
     // Users2 저장
@@ -90,6 +92,8 @@ class LikeLogAnswerPostsApiControllerTest {
             .oauthId("dafsdafdafs2")
             .refreshToken("fdsajflkdj2")
             .isDelete(false)
+            .agreeTerms(true)
+            .isCertified(true)
             .build();
 
     // QuestionPosts 저장

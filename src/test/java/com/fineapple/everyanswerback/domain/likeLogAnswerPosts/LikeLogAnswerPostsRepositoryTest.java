@@ -70,6 +70,8 @@ class LikeLogAnswerPostsRepositoryTest {
                 .oauthId("testOauth")
                 .refreshToken("testRefreshToken")
                 .isDelete(false)
+                .agreeTerms(true)
+                .isCertified(false)
                 .build();
 
         usersRepository.save(user);

@@ -17,9 +17,11 @@ public class UsersSaveRequestDto {
     private String oauthId;
     private String refreshToken;
     private Boolean isDelete;
+    private Boolean agreeTerms;
+    private Boolean isCertified;
 
     @Builder
-    public UsersSaveRequestDto(Long deptId, String nickname, String deptName, String univ, int entranceYear, String oauthId, String refreshToken, Boolean isDelete) {
+    public UsersSaveRequestDto(Long deptId, String nickname, String deptName, String univ, int entranceYear, String oauthId, String refreshToken, Boolean isDelete, Boolean agreeTerms, Boolean isCertified) {
         this.deptId = deptId;
         this.nickname = nickname;
         this.deptName = deptName;
@@ -28,6 +30,8 @@ public class UsersSaveRequestDto {
         this.oauthId = oauthId;
         this.refreshToken = refreshToken;
         this.isDelete = isDelete;
+        this.agreeTerms = agreeTerms;
+        this.isCertified = isCertified;
     }
 
     public Users toEntity(DeptClass deptClass) {
@@ -40,6 +44,8 @@ public class UsersSaveRequestDto {
                 .oauthId(oauthId)
                 .refreshToken(refreshToken)
                 .isDelete(isDelete)
+                .agreeTerms(agreeTerms)
+                .isCertified(isCertified)
                 .build();
     }
 }

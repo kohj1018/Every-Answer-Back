@@ -16,6 +16,8 @@ public class UsersUpdateRequestDto {
     private String oauthId;
     private String refreshToken;
     private Boolean isDelete;
+    private Boolean agreeTerms;
+    private Boolean isCertified;
 
     public UsersUpdateRequestDto(Users entity) {
         this.deptId = entity.getDeptClass().getDeptId();
@@ -26,10 +28,12 @@ public class UsersUpdateRequestDto {
         this.oauthId = entity.getOauthId();
         this.refreshToken = entity.getRefreshToken();
         this.isDelete = entity.getIsDelete();
+        this.agreeTerms = entity.getAgreeTerms();
+        this.isCertified = entity.getIsCertified();
     }
 
     @Builder
-    public UsersUpdateRequestDto(Long deptId, String nickname, String deptName, String univ, int entranceYear, String oauthId, String refreshToken, Boolean isDelete) {
+    public UsersUpdateRequestDto(Long deptId, String nickname, String deptName, String univ, int entranceYear, String oauthId, String refreshToken, Boolean isDelete, Boolean agreeTerms, Boolean isCertified) {
         this.deptId = deptId;
         this.nickname = nickname;
         this.deptName = deptName;
@@ -38,5 +42,7 @@ public class UsersUpdateRequestDto {
         this.oauthId = oauthId;
         this.refreshToken = refreshToken;
         this.isDelete = isDelete;
+        this.agreeTerms = agreeTerms;
+        this.isCertified = isCertified;
     }
 }

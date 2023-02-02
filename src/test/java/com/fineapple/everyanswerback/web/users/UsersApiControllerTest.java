@@ -79,6 +79,8 @@ public class UsersApiControllerTest {
         String oauthId = "testOauth";
         String refreshToken = "testRefreshToken";
         Boolean isDelete = true;
+        boolean agreeTerms = true;
+        boolean isCertified = false;
 
         UsersSaveRequestDto requestDto = UsersSaveRequestDto.builder()
                 .deptId(deptClass.getDeptId())
@@ -89,6 +91,8 @@ public class UsersApiControllerTest {
                 .oauthId(oauthId)
                 .refreshToken(refreshToken)
                 .isDelete(isDelete)
+                .agreeTerms(agreeTerms)
+                .isCertified(isCertified)
                 .build();
 
         String url = "http://localhost:" + port + "/api/v1/users";
@@ -112,9 +116,10 @@ public class UsersApiControllerTest {
         assertThat(all.get(0).getOauthId()).isEqualTo(oauthId);
         assertThat(all.get(0).getRefreshToken()).isEqualTo(refreshToken);
         assertThat(all.get(0).getIsDelete()).isEqualTo(isDelete);
+        assertThat(all.get(0).getAgreeTerms()).isEqualTo(agreeTerms);
+        assertThat(all.get(0).getIsCertified()).isEqualTo(isCertified);
         assertThat(all.get(0).getCreatedAt()).isAfter(time);
         assertThat(all.get(0).getUpdatedAt()).isAfter(time);
-        System.out.println(all.get(0).getCreatedAt());
     }
 
     @Test
@@ -130,6 +135,8 @@ public class UsersApiControllerTest {
         String oauthId = "testOauth";
         String refreshToken = "testRefreshToken";
         Boolean isDelete = true;
+        boolean agreeTerms = true;
+        boolean isCertified = false;
 
         Users savedUsers = usersRepository.save(Users.builder()
                 .deptClass(deptClass)
@@ -140,6 +147,8 @@ public class UsersApiControllerTest {
                 .oauthId(oauthId)
                 .refreshToken(refreshToken)
                 .isDelete(isDelete)
+                .agreeTerms(agreeTerms)
+                .isCertified(isCertified)
                 .build());
 
         Long updateId = savedUsers.getUserId();
@@ -153,6 +162,8 @@ public class UsersApiControllerTest {
         String oauthId2 = "testOauth2";
         String refreshToken2 = "testRefreshToken2";
         Boolean isDelete2 = false;
+        boolean agreeTerms2 = false;
+        boolean isCertified2 = true;
 
         UsersUpdateRequestDto requestDto = UsersUpdateRequestDto.builder()
                 .deptId(deptClassSaveRequestDto2.getDeptId())
@@ -163,6 +174,8 @@ public class UsersApiControllerTest {
                 .oauthId(oauthId2)
                 .refreshToken(refreshToken2)
                 .isDelete(isDelete2)
+                .agreeTerms(agreeTerms2)
+                .isCertified(isCertified2)
                 .build();
 
         String url = "http://localhost:" + port + "/api/v1/users/" + updateId;
@@ -185,6 +198,8 @@ public class UsersApiControllerTest {
         assertThat(all.get(0).getOauthId()).isEqualTo(oauthId2);
         assertThat(all.get(0).getRefreshToken()).isEqualTo(refreshToken2);
         assertThat(all.get(0).getIsDelete()).isEqualTo(isDelete2);
+        assertThat(all.get(0).getAgreeTerms()).isEqualTo(agreeTerms2);
+        assertThat(all.get(0).getIsCertified()).isEqualTo(isCertified2);
         assertThat(all.get(0).getUpdatedAt()).isNotNull();
     }
 }

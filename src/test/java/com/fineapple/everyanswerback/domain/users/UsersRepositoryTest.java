@@ -50,6 +50,8 @@ class UsersRepositoryTest {
         String oauthId = "testOauth";
         String refreshToken = "testRefreshToken";
         boolean isDelete = true;
+        boolean agreeTerms = true;
+        boolean isCertified = false;
 
         usersRepository.save(Users.builder()
                 .deptClass(deptClass)
@@ -60,6 +62,8 @@ class UsersRepositoryTest {
                 .oauthId(oauthId)
                 .refreshToken(refreshToken)
                 .isDelete(isDelete)
+                .agreeTerms(agreeTerms)
+                .isCertified(isCertified)
                 .build());
 
         // 비교를 위한 기준 시간 변수 초기화
@@ -78,9 +82,10 @@ class UsersRepositoryTest {
         assertThat(users.getOauthId()).isEqualTo(oauthId);
         assertThat(users.getRefreshToken()).isEqualTo(refreshToken);
         assertThat(users.getIsDelete()).isEqualTo(isDelete);
-        System.out.println(users.getIsDelete());
+        assertThat(users.getAgreeTerms()).isEqualTo(agreeTerms);
+        assertThat(users.getIsCertified()).isEqualTo(isCertified);
+
         assertThat(users.getCreatedAt()).isAfter(time);
         assertThat(users.getUpdatedAt()).isAfter(time);
-        System.out.println(users.getCreatedAt());
     }
 }

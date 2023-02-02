@@ -49,6 +49,12 @@ public class Users extends BaseTimeEntity {
     @Column(name = "is_delete", nullable = false)
     private Boolean isDelete;
 
+    @Column(name = "agree_terms", nullable = false) // 약관동의 여부
+    private Boolean agreeTerms;
+
+    @Column(name = "is_certified", nullable = false)    // 학교인증 여부
+    private Boolean isCertified;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")  // QuestionPosts 와의 양방향 매핑을 위해 추가
     private List<QuestionPosts> questionPostsList = new ArrayList<>();
 
@@ -59,7 +65,7 @@ public class Users extends BaseTimeEntity {
     private List<LikeLogAnswerPosts> likeLogAnswerPostsList = new ArrayList<>();
 
     @Builder
-    public Users(DeptClass deptClass, String nickname, String deptName, String univ, int entranceYear, String oauthId, String refreshToken, Boolean isDelete) {
+    public Users(DeptClass deptClass, String nickname, String deptName, String univ, int entranceYear, String oauthId, String refreshToken, Boolean isDelete, Boolean agreeTerms, Boolean isCertified) {
         this.deptClass = deptClass;
         this.nickname = nickname;
         this.deptName = deptName;
@@ -68,6 +74,8 @@ public class Users extends BaseTimeEntity {
         this.oauthId = oauthId;
         this.refreshToken = refreshToken;
         this.isDelete = isDelete;
+        this.agreeTerms = agreeTerms;
+        this.isCertified = isCertified;
     }
 
     public void update(UsersUpdateRequestDto requestDto, DeptClass deptClass) {
@@ -79,5 +87,7 @@ public class Users extends BaseTimeEntity {
         this.oauthId = requestDto.getOauthId();
         this.refreshToken = requestDto.getRefreshToken();
         this.isDelete = requestDto.getIsDelete();
+        this.agreeTerms = requestDto.getAgreeTerms();
+        this.isCertified = requestDto.getIsCertified();
     }
 }
