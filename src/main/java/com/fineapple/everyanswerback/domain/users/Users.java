@@ -2,6 +2,7 @@ package com.fineapple.everyanswerback.domain.users;
 
 import com.fineapple.everyanswerback.domain.BaseTimeEntity;
 import com.fineapple.everyanswerback.domain.answerPosts.AnswerPosts;
+import com.fineapple.everyanswerback.domain.blockUserLog.BlockUserLog;
 import com.fineapple.everyanswerback.domain.deptClass.DeptClass;
 import com.fineapple.everyanswerback.domain.likeLogAnswerPosts.LikeLogAnswerPosts;
 import com.fineapple.everyanswerback.domain.questionPosts.QuestionPosts;
@@ -63,6 +64,9 @@ public class Users extends BaseTimeEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")   // LikeLogAnswerPosts 와의 양방향 매핑을 위해 추가
     private List<LikeLogAnswerPosts> likeLogAnswerPostsList = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")   // BlockUserLog 와의 양방향 매핑을 위해 추가
+    private List<BlockUserLog> blockUserLogList = new ArrayList<>();
 
     @Builder
     public Users(DeptClass deptClass, String nickname, String deptName, String univ, int entranceYear, String oauthId, String refreshToken, Boolean isDelete, Boolean agreeTerms, Boolean isCertified) {
