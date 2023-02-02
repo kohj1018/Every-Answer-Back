@@ -1,11 +1,18 @@
 package com.fineapple.everyanswerback.web.users.dto;
 
+import com.fineapple.everyanswerback.domain.answerPosts.AnswerPosts;
+import com.fineapple.everyanswerback.domain.blockUserLog.BlockUserLog;
+import com.fineapple.everyanswerback.domain.questionPosts.QuestionPosts;
 import com.fineapple.everyanswerback.domain.users.Users;
+import com.fineapple.everyanswerback.web.answerPosts.dto.AnswerPostsResponseDto;
 import com.fineapple.everyanswerback.web.deptClass.dto.DeptClassResponseDto;
+import com.fineapple.everyanswerback.web.questionPosts.dto.QuestionPostsResponseDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor
@@ -24,6 +31,10 @@ public class UsersResponseDto {
     private Boolean isDelete;
     private Boolean agreeTerms;
     private Boolean isCertified;
+    private List<Long> questionPostsList;
+    private List<Long> answerPostsList;
+    private List<Long> likeAnswerPostsList;
+    private List<Long> blockUserIdList;
 
     public UsersResponseDto(Users entity) {
         this.userId = entity.getUserId();
@@ -39,5 +50,17 @@ public class UsersResponseDto {
         this.isDelete = entity.getIsDelete();
         this.agreeTerms = entity.getAgreeTerms();
         this.isCertified = entity.getIsCertified();
+        this.questionPostsList = entity.getQuestionPostsList().stream()
+                .map(QuestionPosts::getQuestionPostId)
+                .collect(Collectors.toList());
+        this.answerPostsList = entity.getAnswerPostsList().stream()
+                .map(AnswerPosts::getAnswerPostId)
+                .collect(Collectors.toList());
+        this.likeAnswerPostsList = entity.getLikeLogAnswerPostsList().stream()
+                .map(likeLogAnswerPosts -> likeLogAnswerPosts.getAnswerPost().getAnswerPostId())
+                .collect(Collectors.toList());
+        this.blockUserIdList = entity.getBlockUserLogList().stream()
+                .map(BlockUserLog::getBlockUserId)
+                .collect(Collectors.toList());
     }
 }
