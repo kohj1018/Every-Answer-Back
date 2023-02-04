@@ -1,7 +1,6 @@
 package com.fineapple.everyanswerback.web.users.dto;
 
 import com.fineapple.everyanswerback.domain.answerPosts.AnswerPosts;
-import com.fineapple.everyanswerback.domain.blockUserLog.BlockUserLog;
 import com.fineapple.everyanswerback.domain.questionPosts.QuestionPosts;
 import com.fineapple.everyanswerback.domain.users.Users;
 import com.fineapple.everyanswerback.web.deptClass.dto.DeptClassResponseDto;
@@ -14,39 +13,31 @@ import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor
-public class UsersResponseDto {
-
+public class OtherUsersResponseDto {
     private Long userId;
     private DeptClassResponseDto deptClass;
     private String nickname;
     private String deptName;
     private String univ;
     private int entranceYear;
-    private String oauthId;
-    private String refreshToken;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Boolean isDelete;
-    private Boolean agreeTerms;
     private Boolean isCertified;
     private List<Long> questionPostsList;
     private List<Long> answerPostsList;
     private List<Long> likeAnswerPostsList;
-    private List<Long> blockUserIdList;
 
-    public UsersResponseDto(Users entity) {
+    public OtherUsersResponseDto(Users entity) {
         this.userId = entity.getUserId();
         this.deptClass = new DeptClassResponseDto(entity.getDeptClass());
         this.nickname = entity.getNickname();
         this.deptName = entity.getDeptName();
         this.univ = entity.getUniv();
         this.entranceYear = entity.getEntranceYear();
-        this.oauthId = entity.getOauthId();
-        this.refreshToken = entity.getRefreshToken();
         this.createdAt = entity.getCreatedAt();
         this.updatedAt = entity.getUpdatedAt();
         this.isDelete = entity.getIsDelete();
-        this.agreeTerms = entity.getAgreeTerms();
         this.isCertified = entity.getIsCertified();
         this.questionPostsList = entity.getQuestionPostsList().stream()
                 .map(QuestionPosts::getQuestionPostId)
@@ -56,9 +47,6 @@ public class UsersResponseDto {
                 .collect(Collectors.toList());
         this.likeAnswerPostsList = entity.getLikeLogAnswerPostsList().stream()
                 .map(likeLogAnswerPosts -> likeLogAnswerPosts.getAnswerPost().getAnswerPostId())
-                .collect(Collectors.toList());
-        this.blockUserIdList = entity.getBlockUserLogList().stream()
-                .map(BlockUserLog::getBlockUserId)
                 .collect(Collectors.toList());
     }
 }

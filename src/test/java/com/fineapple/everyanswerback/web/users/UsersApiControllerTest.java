@@ -151,8 +151,6 @@ public class UsersApiControllerTest {
                 .isCertified(isCertified)
                 .build());
 
-        Long updateId = savedUsers.getUserId();
-
         // 이후 수정 값
         // UsersUpdateRequestDto 생성
         String nickname2 = "test2";
@@ -178,16 +176,16 @@ public class UsersApiControllerTest {
                 .isCertified(isCertified2)
                 .build();
 
-        String url = "http://localhost:" + port + "/api/v1/users/" + updateId;
+        String url = "http://localhost:" + port + "/api/v1/users/" + oauthId;
 
         HttpEntity<UsersUpdateRequestDto> requestEntity = new HttpEntity<>(requestDto);
 
         //when
-        ResponseEntity<Long> responseEntity = testRestTemplate.exchange(url, HttpMethod.PUT, requestEntity, Long.class);
+        ResponseEntity<String> responseEntity = testRestTemplate.exchange(url, HttpMethod.PUT, requestEntity, String.class);
 
         //then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).isGreaterThan(0L);
+        assertThat(responseEntity.getBody()).isNotBlank();
 
         List<Users> all = usersRepository.findAll();
         assertThat(all.get(0).getDeptClass().getDeptId()).isEqualTo(deptClassSaveRequestDto2.getDeptId());
