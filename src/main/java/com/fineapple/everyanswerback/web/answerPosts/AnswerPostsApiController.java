@@ -36,4 +36,10 @@ public class AnswerPostsApiController {
     public List<AnswerPostsResponseDto> findByQuestionPostId(@RequestParam Long questionPostId) {
         return answerPostsService.findByQuestionPostId(questionPostId);
     }
+
+    @Operation(summary = "ID로 답변글 불러오기")
+    @GetMapping("/{id}")
+    public AnswerPostsResponseDto findById(@PathVariable Long id) {
+        return answerPostsService.findById(id);
+    }
 }

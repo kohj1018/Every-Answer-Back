@@ -64,4 +64,11 @@ public class AnswerPostsService {
 
         return responseDtoList;
     }
+
+    public AnswerPostsResponseDto findById(Long id) {
+        AnswerPosts entity = answerPostsRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 답변글이 존재하지 않습니다. id=" + id));
+
+        return new AnswerPostsResponseDto(entity);
+    }
 }
