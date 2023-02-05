@@ -36,7 +36,7 @@ public class BlockUserLogService {
         Optional<BlockUserLog> log = blockUserLogRepository.findByUserIdAndBlockUserId(userId, blockUserId);
 
         if (log.isPresent()) {
-            blockUserLogRepository.deleteById(log.get().getBlockUserId());
+            blockUserLogRepository.deleteById(log.get().getBlockUserLogId());
         } else {
             throw new IllegalArgumentException("차단 기록이 존재하지 않습니다.");
         }
