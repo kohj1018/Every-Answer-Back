@@ -128,4 +128,18 @@ public class QuestionPostsService {
 
         return responseDtoList;
     }
+
+    public List<QuestionPostsResponseDto> findByUserId(Long userId) {
+        List<QuestionPosts> entityList = questionPostsRepository.findByUserId(userId);
+
+        List<QuestionPostsResponseDto> responseDtoList = new ArrayList<>();
+
+        if (entityList != null && !entityList.isEmpty()) {
+            entityList.forEach(entity -> {
+                responseDtoList.add(new QuestionPostsResponseDto(entity));
+            });
+        }
+
+        return responseDtoList;
+    }
 }

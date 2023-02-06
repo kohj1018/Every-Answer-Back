@@ -49,4 +49,10 @@ public class QuestionPostsApiController {
     public List<QuestionPostsResponseDto> getSearchedPost(@PathVariable String searchTerm) {
         return questionPostsService.findByTitleContainingOrContentContainingOrderByQuestionPostIdDesc(searchTerm);
     }
+
+    @Operation(summary = "유저가 작성한 질문글 모두 불러오기")
+    @GetMapping("/writtenByUser/{userId}")
+    public List<QuestionPostsResponseDto> findByUserId(@PathVariable Long userId) {
+        return questionPostsService.findByUserId(userId);
+    }
 }

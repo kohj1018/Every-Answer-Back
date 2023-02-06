@@ -6,11 +6,14 @@ import com.fineapple.everyanswerback.domain.likeLogAnswerPosts.LikeLogAnswerPost
 import com.fineapple.everyanswerback.domain.likeLogAnswerPosts.LikeLogAnswerPostsRepository;
 import com.fineapple.everyanswerback.domain.users.Users;
 import com.fineapple.everyanswerback.domain.users.UsersRepository;
+import com.fineapple.everyanswerback.web.answerPosts.dto.AnswerPostsResponseDto;
 import com.fineapple.everyanswerback.web.likeLogAnswerPosts.dto.LikeLogAnswerPostsSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -57,5 +60,21 @@ public class LikeLogAnswerPostsService {
         Optional<LikeLogAnswerPosts> log = likeLogAnswerPostsRepository.findByAnswerPostIdAndUserId(answerPostId, userId);
 
         return log.isPresent(); // log 존재 => true, log 존재 x => false
+    }
+
+    public List<AnswerPostsResponseDto> findByUserId(Long userId) {
+        List<LikeLogAnswerPosts> logList = likeLogAnswerPostsRepository.findByUserId(userId);
+
+        List<AnswerPostsResponseDto> responseDtoList = new ArrayList<>();
+
+        if (logList != null && !logList.isEmpty()) {
+            logList.forEach(log -> {
+                Optional<AnswerPosts> answerPost = answerPostsRepository.findById(log.getAnswerPost().getAnswerPostId());
+
+                answerPost.ifPresent(answerPosts -> responseDtoList.add(new AnswerPostsResponseDto(answerPosts)));
+            });
+        }
+
+        return responseDtoList;
     }
 }

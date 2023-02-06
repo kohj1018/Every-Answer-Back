@@ -37,9 +37,9 @@ public class AnswerPostsApiController {
         return answerPostsService.findByQuestionPostId(questionPostId);
     }
 
-    @Operation(summary = "ID로 답변글 불러오기")
-    @GetMapping("/{id}")
-    public AnswerPostsResponseDto findById(@PathVariable Long id) {
-        return answerPostsService.findById(id);
+    @Operation(summary = "유저가 작성한 답변글 모두 불러오기")
+    @GetMapping("/writtenByUser/{userId}")
+    public List<AnswerPostsResponseDto> findByUserId(@PathVariable Long userId) {
+        return answerPostsService.findByUserId(userId);
     }
 }

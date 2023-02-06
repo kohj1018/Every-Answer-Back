@@ -1,11 +1,14 @@
 package com.fineapple.everyanswerback.web.likeLogAnswerPosts;
 
 import com.fineapple.everyanswerback.service.LikeLogAnswerPostsService;
+import com.fineapple.everyanswerback.web.answerPosts.dto.AnswerPostsResponseDto;
 import com.fineapple.everyanswerback.web.likeLogAnswerPosts.dto.LikeLogAnswerPostsSaveRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "LikeLog-AnswerPosts", description = "질문글 추천 기록 관련 api 입니다.")
 @RequiredArgsConstructor
@@ -31,5 +34,11 @@ public class LikeLogAnswerPostsApiController {
     @GetMapping()
     public boolean getLikeLogByUserId(@RequestParam Long answerPostId, @RequestParam Long userId) {
         return likeLogAnswerPostsService.findByAnswerPostIdAndUserId(answerPostId, userId);
+    }
+
+    @Operation(summary = "유저가 좋아요한 답변글 모두 불러오기")
+    @GetMapping("/likedByUser/{userId}")
+    public List<AnswerPostsResponseDto> findByUserId(@PathVariable Long userId) {
+        return likeLogAnswerPostsService.findByUserId(userId);
     }
 }

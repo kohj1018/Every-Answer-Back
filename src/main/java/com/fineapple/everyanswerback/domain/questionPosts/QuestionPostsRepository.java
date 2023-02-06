@@ -18,4 +18,7 @@ public interface QuestionPostsRepository extends JpaRepository<QuestionPosts, Lo
     Page<QuestionPosts> findByquestionPostIdLessThanOrderByquestionPostIdDesc(Long lastPostId, PageRequest pageRequest);
 
     List<QuestionPosts> findByTitleContainingOrContentContainingOrderByQuestionPostIdDesc(String searchTerm1, String searchTerm2);
+
+    @Query(value = "SELECT qp FROM question_posts qp WHERE qp.user.userId = ?1 ORDER BY qp.createdAt DESC")
+    List<QuestionPosts> findByUserId(Long userId);
 }

@@ -250,11 +250,11 @@ class AnswerPostsApiControllerTest {
         assertThat(responseEntity.getBody()).isNotNull();
 
         List<AnswerPostsResponseDto> answerPostsList = Arrays.asList(responseEntity.getBody());
-        assertThat(answerPostsList.get(0).getUser().getUserId()).isEqualTo(user2.getUserId());
-        assertThat(answerPostsList.get(1).getUser().getUserId()).isEqualTo(user.getUserId());
-        assertThat(answerPostsList.get(0).getContent()).isEqualTo(content2);
-        assertThat(answerPostsList.get(1).getContent()).isEqualTo(content3);
-        assertThat(answerPostsList.get(0).getCreatedAt()).isAfter(time);
+        assertThat(answerPostsList.get(1).getUser().getUserId()).isEqualTo(user2.getUserId());
+        assertThat(answerPostsList.get(0).getUser().getUserId()).isEqualTo(user.getUserId());
+        assertThat(answerPostsList.get(1).getContent()).isEqualTo(content2);
+        assertThat(answerPostsList.get(0).getContent()).isEqualTo(content3);
+        assertThat(answerPostsList.get(1).getCreatedAt()).isAfter(time);
     }
 
     @Test

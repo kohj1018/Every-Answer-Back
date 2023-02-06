@@ -65,10 +65,17 @@ public class AnswerPostsService {
         return responseDtoList;
     }
 
-    public AnswerPostsResponseDto findById(Long id) {
-        AnswerPosts entity = answerPostsRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 답변글이 존재하지 않습니다. id=" + id));
+    public List<AnswerPostsResponseDto> findByUserId(Long userId) {
+        List<AnswerPosts> entityList = answerPostsRepository.findByUserId(userId);
 
-        return new AnswerPostsResponseDto(entity);
+        List<AnswerPostsResponseDto> responseDtoList = new ArrayList<>();
+
+        if (entityList != null && !entityList.isEmpty()) {
+            entityList.forEach(entity -> {
+                responseDtoList.add(new AnswerPostsResponseDto(entity));
+            });
+        }
+
+        return responseDtoList;
     }
 }
